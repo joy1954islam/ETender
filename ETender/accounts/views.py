@@ -40,18 +40,9 @@ from django.views.generic import TemplateView
 def home(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
-            return redirect('ReceptionistHome')
+            return redirect('SuperAdminHome')
 
     return HttpResponse("login failed")
-
-
-def doctor_home_page(request):
-    doctor = User.objects.all().filter(is_superuser=True)
-
-    context = {
-        'doctor': doctor,
-    }
-    return render(request,'doctor.html',context)
 
 
 def index_page(request):
@@ -61,14 +52,6 @@ def index_page(request):
         'doctor': doctor,
     }
     return render(request,'index.html',context)
-
-
-def DoctorProfileSingle(request,pk):
-    profile = User.objects.filter(pk=pk)
-    context = {
-        'profile': profile,
-    }
-    return render(request,'single_doctor_profile_list.html',context)
 
 
 class ChangeLanguageView(TemplateView):

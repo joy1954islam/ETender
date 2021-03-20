@@ -29,12 +29,10 @@ User = get_user_model()
 
 def SuperAdminHome(request):
     student_count = User.objects.all()
-
     context = {
 
-
     }
-    return render(request,'SuperAdmin/Home.html',context)
+    return render(request, 'SuperAdmin/Home.html', context)
 
 
 def SuperAdminProfile(request):
@@ -75,7 +73,7 @@ def save_ministry_form(request, form, template_name):
 
 def ministry_create(request):
     if request.method == 'POST':
-        form = MinistryForm(request.POST)
+        form = MinistryForm(request.POST or None)
     else:
         form = MinistryForm()
     return save_ministry_form(request, form, 'SuperAdmin/Ministry/partial_ministry_create.html')
