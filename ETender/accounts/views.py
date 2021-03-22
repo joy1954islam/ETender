@@ -34,6 +34,7 @@ from .forms import (
     ResendActivationCodeForm, ResendActivationCodeViaEmailForm, ChangeProfileForm, ChangeEmailForm
 )
 from .models import Activation, User
+from government_employee.models import Holder
 from django.views.generic import TemplateView
 
 
@@ -123,7 +124,7 @@ class SignUpView(GuestOnlyView, FormView):
     form_class = SignUpForm
 
     def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'patient'
+        kwargs['user_type'] = 'holder'
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
@@ -157,13 +158,13 @@ class SignUpView(GuestOnlyView, FormView):
 
             send_activation_email(request, user.email, code)
 
-            messages.success(request,f'You are signed up. To activate the account, follow the link sent to the mail.')
+            messages.success(request, f'You are signed up. To activate the account, follow the link sent to the mail.')
         else:
             raw_password = form.cleaned_data['password1']
 
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            messages.success(request,f'You are successfully signed up!')
+            messages.success(request, f'You are successfully signed up!')
 
         return redirect('index')
 

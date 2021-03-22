@@ -16,20 +16,14 @@
         </div>
     </div>
 </div>
-<div class="custom-breadcrumns border-bottom">
-    <div class="container">
-        <a href="{% url 'index' %}">Home</a>
-        <span class="mx-3 icon-keyboard_arrow_right"></span>
-        <span class="current">SignUp</span>
-    </div>
-</div>
+
 <div class="site-section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="row">
                     <div class="col-md-12 form-group">
-                        <form method="POST">
+                        <form method="POST" enctype="multipart/form-data">
                              {% csrf_token %}
                              {{ form|crispy }}
 

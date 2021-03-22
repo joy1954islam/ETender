@@ -7,7 +7,7 @@ from django.conf import settings
 
 from django.contrib.auth.models import User
 from django.contrib.auth.models import User
-
+from government_employee.models import Holder
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 from django.db.models import Q
@@ -126,26 +126,24 @@ class SignInViaEmailOrUsernameForm(SignIn):
 
 # Doctor SignUpForm
 class SignUpForm(UserCreationForm):
-    # interests = forms.ModelMultipleChoiceField(
-    #     queryset=Course.objects.all(),
-    #     widget=forms.CheckboxSelectMultiple,
-    #     required=True
-    # )
+    lisence_number = forms.CharField(
+        required=True
+    )
+    phone_number = forms.CharField(required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = settings.SIGN_UP_FIELDS
+        fields = ['username', 'first_name', 'last_name', 'email', 'lisence_number', 'phone_number', 'address', 'image',
+                  'password1', 'password2']
 
     email = forms.EmailField(label=_('Email'), help_text=_('Required. Enter an existing email address.'))
 
     @transaction.atomic
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.is_patient = True
-        # if commit:
         user.save()
-        # student = Student.objects.create(user=user)
-        # student.interests.add(*self.cleaned_data.get('interests'))
+        lisence_number = self.cleaned_data.get('lisence_number')
+        holder = Holder.objects.create(username=user, lisence_number=lisence_number)
         return user
 
     def clean_email(self):
