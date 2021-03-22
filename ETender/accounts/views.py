@@ -42,7 +42,7 @@ def home(request):
         if request.user.is_superuser:
             return redirect('SuperAdminHome')
         elif request.user.is_government_employee:
-            return redirect('index')
+            return redirect('government_employee_home')
 
     return HttpResponse("login failed")
 
