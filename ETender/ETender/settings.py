@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'SuperAdmin',
+    'government_employee',
 
 
     'django.contrib.admin',
