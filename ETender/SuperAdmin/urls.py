@@ -22,15 +22,4 @@ urlpatterns = [
     path('change/email/', views.ChangeEmailView.as_view(), name='SuperAdmin_change_email'),
     path('change/email/<code>/', views.ChangeEmailActivateView.as_view(), name='change_email_activation'),
 
-    path('student/', views.student_list, name='super_admin_student_list'),
-    path('<int:pk>/student/view/', views.student_view, name='super_admin_student_view'),
-    path('<int:pk>/student/update/', views.student_update, name='super_admin_student_update'),
-
-
-    path('teacher/', views.teacher_list, name='super_admin_teacher_list'),
-    path('<int:pk>/teacher/view/', views.teacher_view, name='super_admin_teacher_view'),
-    path('<int:pk>/teacher/update/', views.teacher_update, name='super_admin_teacher_update'),
-
-
-
 ]

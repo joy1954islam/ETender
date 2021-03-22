@@ -41,6 +41,8 @@ def home(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
             return redirect('SuperAdminHome')
+        elif request.user.is_government_employee:
+            return redirect('index')
 
     return HttpResponse("login failed")
 
@@ -51,7 +53,7 @@ def index_page(request):
     context = {
         'doctor': doctor,
     }
-    return render(request,'index.html',context)
+    return render(request, 'index.html', context)
 
 
 class ChangeLanguageView(TemplateView):

@@ -42,9 +42,9 @@
                           {% render_field MyFilter.form.last_name class="form-control" %}
                         </div>
                         <div class="form-group col-sm-8 col-md-6">
-                          {{ MyFilter.form.MinistryName.label_tag }}
+                          {{ MyFilter.form.ministry_name.label_tag }}
                           <div>
-                            {% for choice in MyFilter.form.MinistryName %}
+                            {% for choice in MyFilter.form.ministry_name %}
                               <label class="checkbox-inline">
                                 {{ choice.tag }} {{ choice.choice_label }}
                               </label>
@@ -67,6 +67,7 @@
                                     <th>Last Name </th>
                                     <th>Email</th>
                                     <th>Ministry Name</th>
+                                    <th>Is Government Employee</th>
                                     <th></th>
 
                                 </tr>
@@ -81,12 +82,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="modal-employee">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      </div>
-    </div>
-</div>
+
 
 
 {% endblock content %}

@@ -20,7 +20,7 @@ class MinistryForm(forms.ModelForm):
 
     class Meta:
         model = Ministry
-        fields = ['MinistryName','MinisterName','Email']
+        fields = ['ministry_name', 'minister_name', 'email']
 
 
 # class UserUpdateForm(forms.ModelForm):
@@ -39,14 +39,13 @@ class MinistryForm(forms.ModelForm):
 class GovtSignUpForm(UserCreationForm):
     class Meta:
         model = User
-        # fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
-        fields = ['username', 'first_name', 'last_name', 'email','MinistryName', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'email', 'ministry_name', 'password1', 'password2']
 
     email = forms.EmailField(label=_('Email'), help_text=_('Required. Enter an existing email address.'))
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.is_governmentEmployee = True
+        user.is_government_employee = True
         if commit:
             user.save()
         return user
@@ -64,16 +63,16 @@ class GovtSignUpForm(UserCreationForm):
 class GovtSignUpUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email','MinistryName',]
+        fields = ['username', 'first_name', 'last_name', 'email', 'ministry_name']
 
 
 class StudentSignUpUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email',]
+        fields = ['username', 'first_name', 'last_name', 'email']
 
 
 class TeacherSignUpUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email',]
+        fields = ['username', 'first_name', 'last_name', 'email']

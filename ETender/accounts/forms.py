@@ -31,7 +31,7 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username','first_name','last_name','phone_number','address','image']
+        fields = ['username', 'first_name', 'last_name', 'phone_number', 'address', 'image']
 
 
 class SignIn(UserCacheMixin, forms.Form):
