@@ -44,6 +44,8 @@ def home(request):
             return redirect('SuperAdminHome')
         elif request.user.is_government_employee:
             return redirect('government_employee_home')
+        elif request.user.is_tender_holder:
+            return redirect('index')
 
     return HttpResponse("login failed")
 
