@@ -1,0 +1,66 @@
+{% extends 'SuperAdmin/SuperAdminNavbar.html' %}
+
+{% load static %}
+
+{% block content %}
+<br>
+
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Button Example <small>Holder</small></h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table class="table" id="datatable-buttons"  style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>UserName</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Lisence Number</th>
+                                    <th>Approved Status</th>
+                                    <th>Details</th>
+                                    <th>Change Holder Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    {% for holder in holder %}
+                                      <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ holder.username}}</td>
+                                        <td>{{ holder.email }}</td>
+                                        <td>{{ holder.phone_number }}</td>
+                                        <td>{{ holder.holder.lisence_number }}</td>
+                                        <td>{{ holder.is_tender_holder }}</td>
+                                        <td>
+                                            <a href="{% url 'holder_registration_details' holder.id %}" class="btn btn-success">Details</a>
+                                        </td>
+                                        <td>
+                                            {% if holder.is_tender_holder == False %}
+                                                <a href="{% url 'holder_registration_approved' holder.id %}" class="btn btn-primary"> Approve Holder </a>
+                                            {% else %}
+                                                <a  class="btn btn-primary"> Already Active </a>
+                                            {% endif %}
+                                        </td>
+
+                                      </tr>
+                                    {% empty %}
+                                      <tr>
+                                        <td colspan="8" class="text-center bg-warning">No ministry</td>
+                                      </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

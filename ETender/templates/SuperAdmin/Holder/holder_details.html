@@ -1,0 +1,58 @@
+{% extends 'SuperAdmin/SuperAdminNavbar.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+        <th scope="col">#</th>
+        <td>{{ holder.id }}</td>
+    </tr>
+    <tr>
+        <th scope="col">User Name </th>
+        <td>{{ holder.username }}</td>
+    </tr>
+    <tr>
+        <th scope="col">First Name </th>
+        <td>{{ holder.first_name }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Last Name </th>
+        <td>{{ holder.last_name }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Full Name </th>
+        <td>{{ holder.first_name }} {{ holder.last_name }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Phone Number </th>
+        <td>{{ holder.phone_number }} </td>
+    </tr>
+    <tr>
+        <th scope="col">Address </th>
+        <td>{{ holder.address }} </td>
+    </tr>
+    <tr>
+        <th scope="col">Image </th>
+        <td>
+            <img src="{{ holder.image.url }}" height="100" width="100">
+        </td>
+    </tr>
+    <tr>
+        <th scope="col">Lisence Number </th>
+        <td>{{ holder.holder.lisence_number }} </td>
+    </tr>
+    <tr>
+        <th scope="col">Holder Status </th>
+        <td>{{ holder.is_tender_holder}} </td>
+    </tr>
+    <tr>
+      <a href="{% url 'holder_registration_list' %}" class="btn btn-primary"> Back All Holder Registration</a>
+    </tr>
+
+  </thead>
+
+</table>
+{% endblock %}

@@ -22,6 +22,7 @@ from django.contrib.auth.views import (
     LogoutView as BaseLogoutView, PasswordChangeView as BasePasswordChangeView,
     PasswordResetDoneView as BasePasswordResetDoneView, PasswordResetConfirmView as BasePasswordResetConfirmView,
 )
+from government_employee.models import Holder
 from .filters import GovtUserFilter
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -268,3 +269,27 @@ class ChangePasswordView(BasePasswordChangeView):
         messages.success(self.request, f'Your password was changed.')
 
         return redirect('log_in')
+
+
+def holder_registration_list(request):
+    holder = User.objects.exclude(is_government_employee=True).exclude(is_superuser=True)
+    context = {
+        'holder': holder
+    }
+    return render(request, 'SuperAdmin/Holder/holder_list.html', context=context)
+
+
+def holder_registration_details(request, holder_id):
+    holder = User.objects.get(id=holder_id)
+    context = {
+        'holder': holder
+    }
+    return render(request, 'SuperAdmin/Holder/holder_details.html', context=context)
+
+
+def holder_registration_approved(request, holder_id):
+    holder = User.objects.get(id=holder_id)
+    holder.is_tender_holder = True
+    holder.save()
+    return redirect(reverse('holder_registration_list'))
+
