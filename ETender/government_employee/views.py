@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from .models import *
 from django.contrib.auth.models import User
+from .forms import *
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -15,3 +16,31 @@ def register_holder_list(request):
         'holder': holder
     }
     return render(request, '', context=context)
+
+
+def tender_upload_list(request):
+    tender = TenderUpload.objects.all()
+    context = {
+        'tender': tender
+    }
+    return render(request, 'government_employee/TenderUpload/tender_list.html', context= context)
+
+
+def tender_upload_create(request):
+    if request.method == "POST":
+        form = TenderUploadForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            t = form.save(commit=False)
+            t.username = request.user
+            t.save()
+            return redirect(reverse('tender_upload_list'))
+        context = {
+            'form': form
+        }
+        return render(request, 'government_employee/TenderUpload/tender_create.html', context=context)
+    if request.method == "GET":
+        form = TenderUploadForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'government_employee/TenderUpload/tender_create.html', context=context)
