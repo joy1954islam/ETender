@@ -1,0 +1,21 @@
+{% extends 'government_employee/government_employee.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="modal-header">
+     <h4 class="modal-title">Update Tender</h4>
+
+  </div>
+  <div class="modal-body ">
+
+    {{ form|crispy }}
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Update Tender</button>
+  </div>
+</form>
+{% endblock content %}

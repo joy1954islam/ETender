@@ -7,5 +7,7 @@ urlpatterns = [
 
     path('tender/upload/', tender_upload_list, name='tender_upload_list'),
     path('tender/upload/create/', tender_upload_create, name='tender_upload_create'),
+    path('tender/upload/update/<int:tender_id>/', tender_upload_update, name='tender_upload_update'),
+    path('tender/upload/delete/<int:tender_id>/', tender_upload_delete, name='tender_upload_delete'),
 
 ]

@@ -43,12 +43,12 @@
                                         <td>{{ tender.ministry_name }}</td>
                                         <td>{{ tender.publish_date }}</td>
                                         <td>{{ tender.end_date }}</td>
-                                        <td>{{ tender.pdf }}</td>
+                                          <td><a target="_blank" href="{{ tender.pdf.url }}">{{ tender.pdf }}</a></td>
                                         <td style="width: 100px">
-                                            <a href="#" class="btn btn-success"> Update </a>
+                                            <a href="{% url 'tender_upload_update' tender.id %}" class="btn btn-success"> Update </a>
                                         </td>
                                         <td style="width: 100px">
-                                            <a href="#" class="btn btn-danger"> Delete </a>
+                                            <a href="{% url 'tender_upload_delete' tender.id %}" class="btn btn-danger"> Delete </a>
                                         </td>
                                       </tr>
                                     {% empty %}

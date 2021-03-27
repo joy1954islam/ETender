@@ -44,3 +44,37 @@ def tender_upload_create(request):
             'form': form
         }
         return render(request, 'government_employee/TenderUpload/tender_create.html', context=context)
+
+
+def tender_upload_update(request, tender_id):
+    tender = TenderUpload.objects.get(id=tender_id)
+    if request.method == "POST":
+        form = TenderUploadForm(request.POST or None, request.FILES or None, instance=tender)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('tender_upload_list'))
+        context = {
+                'form': form
+            }
+        return render(request, 'government_employee/TenderUpload/tender_upload.html', context=context)
+    if request.method == "GET":
+        form = TenderUploadForm(instance=tender)
+        context = {
+            'form': form
+        }
+        return render(request, 'government_employee/TenderUpload/tender_upload.html', context=context)
+
+
+def tender_upload_delete(request, tender_id):
+    tender = TenderUpload.objects.get(id=tender_id)
+    if request.method == "POST":
+        tender.delete()
+        context = {
+            'tender': tender
+        }
+        return render(request, 'government_employee/TenderUpload/tender_delete.html', context=context)
+    if request.method == "GET":
+        context = {
+            'tender': tender
+        }
+        return render(request, 'government_employee/TenderUpload/tender_delete.html', context=context)
