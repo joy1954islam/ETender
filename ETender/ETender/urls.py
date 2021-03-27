@@ -17,12 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from holder.views import home_tender_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('super/admin/', include('SuperAdmin.urls')),
     path('government/employee/', include('government_employee.urls')),
+
+    path('', home_tender_list, name='index'),
 
 
 ]

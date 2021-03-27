@@ -50,15 +50,6 @@ def home(request):
     return HttpResponse("login failed")
 
 
-def index_page(request):
-    doctor = User.objects.all().filter(is_superuser=True)
-
-    context = {
-        'doctor': doctor,
-    }
-    return render(request, 'index.html', context)
-
-
 class ChangeLanguageView(TemplateView):
     template_name = 'change_language.html'
 

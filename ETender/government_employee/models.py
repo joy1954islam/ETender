@@ -19,6 +19,7 @@ class TenderUpload(models.Model):
     publish_date = models.DateField(verbose_name='Tender Publish Date')
     end_date = models.DateField(verbose_name='Tender Publish Date End')
     pdf = models.FileField(verbose_name='Tender Details Pdf')
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title

@@ -1,4 +1,33 @@
 {% extends 'Base/base.html' %}
 
 {% block content %}
+<h1>Tender List</h1>
+    <table class="table">
+          <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Tender Name </th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Ministry Name</th>
+                  <th scope="col">Publish Date</th>
+                  <th scope="col">End Date</th>
+                  <th scope="col">Extra Details In Pdf</th>
+                  <th scope="col"> Details </th>
+                </tr>
+          </thead>
+          <tbody>
+          {% for tender in tender %}
+               <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ tender.title }}</td>
+                  <td>{{ tender.username }}</td>
+                  <td>{{ tender.ministry_name }}</td>
+                  <td>{{ tender.publish_date}}</td>
+                  <td>{{ tender.end_date}}</td>
+                  <td><a href="{{ tender.pdf.url }}" target="_blank">{{ tender.pdf }}</a></td>
+                  <td><a href="#" class="btn btn-primary">Details</a></td>
+               </tr>
+           {% endfor %}
+          </tbody>
+    </table>
 {% endblock content %}
