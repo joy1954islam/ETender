@@ -8,4 +8,4 @@ class TenderUploadForm(forms.ModelForm):
 
     class Meta:
         model = TenderUpload
-        fields = ['title', 'ministry_name', 'publish_date', 'end_date', 'pdf']
+        fields = ['title', 'amount', 'ministry_name', 'publish_date', 'end_date', 'pdf']

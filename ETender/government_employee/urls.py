@@ -9,5 +9,6 @@ urlpatterns = [
     path('tender/upload/create/', tender_upload_create, name='tender_upload_create'),
     path('tender/upload/update/<int:tender_id>/', tender_upload_update, name='tender_upload_update'),
     path('tender/upload/delete/<int:tender_id>/', tender_upload_delete, name='tender_upload_delete'),
+    path('tender/upload/details/<int:tender_id>/', tender_upload_details, name='tender_upload_details'),
 
 ]

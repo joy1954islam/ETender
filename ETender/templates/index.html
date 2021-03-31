@@ -1,11 +1,12 @@
 {% extends 'Base/base.html' %}
 
 {% block content %}
+<br>
 <h1>Tender List</h1>
     <table class="table">
           <thead class="thead-light">
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col">S. No.</th>
                   <th scope="col">Tender Name </th>
                   <th scope="col">Username</th>
                   <th scope="col">Ministry Name</th>
@@ -25,7 +26,7 @@
                   <td>{{ tender.publish_date}}</td>
                   <td>{{ tender.end_date}}</td>
                   <td><a href="{{ tender.pdf.url }}" target="_blank">{{ tender.pdf }}</a></td>
-                  <td><a href="#" class="btn btn-primary">Details</a></td>
+                  <td><a href="{% url 'tender_upload_details' tender.id %}" class="btn btn-primary">Details</a></td>
                </tr>
            {% endfor %}
           </tbody>

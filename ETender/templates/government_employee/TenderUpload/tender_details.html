@@ -1,0 +1,86 @@
+{% extends 'Base/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1>Tender Name {{ tender.title }} Details</h1>
+<button type="button" class="btn btn-primary btn-lg btn-block">Tender User Create Details</button>
+<br>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+         <th scope="col">User Name</th>
+         <td>{{ tender.username }}</td>
+    </tr>
+    <tr>
+         <th scope="col">First Name</th>
+         <td>{{ tender.username.first_name }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Last Name</th>
+         <td>{{ tender.username.last_name }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Address</th>
+         <td>{{ tender.username.address }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Phone Number</th>
+         <td>{{ tender.username.phone_number }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Image</th>
+         <td>
+             <img src="{{ tender.username.image.url }}" height="80px;" width="80px;">
+         </td>
+    </tr>
+  </thead>
+</table>
+<br>
+<button type="button" class="btn btn-secondary btn-lg btn-block">Tender Ministry Details</button>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+         <th scope="col">Ministry Name</th>
+         <td>{{ tender.ministry_name }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Minister Name</th>
+         <td>{{ tender.ministry_name.minister_name }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Email</th>
+         <td>{{ tender.ministry_name.email }}</td>
+    </tr>
+  </thead>
+</table>
+<button type="button" class="btn btn-success btn-lg btn-block">Tender Details</button>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+         <th scope="col">Tender Name</th>
+         <td>{{ tender.title }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Tender/Proposal security(Amount in BDT)'</th>
+         <td>{{ tender.amount }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Tender Publish Date</th>
+         <td>{{ tender.publish_date }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Tender End Date</th>
+         <td>{{ tender.end_date }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Tender Pdf</th>
+         <td>
+             <a href="{{ tender.pdf.url }}" target="_blank">{{ tender.pdf }} </a>
+         </td>
+    </tr>
+  </thead>
+</table>
+
+<a type="button" class="btn btn-primary btn-lg btn-block"> Apply Tender</a>
+{% endblock content %}

@@ -23,7 +23,7 @@ def tender_upload_list(request):
     context = {
         'tender': tender
     }
-    return render(request, 'government_employee/TenderUpload/tender_list.html', context= context)
+    return render(request, 'government_employee/TenderUpload/tender_list.html', context=context)
 
 
 def tender_upload_create(request):
@@ -78,3 +78,11 @@ def tender_upload_delete(request, tender_id):
             'tender': tender
         }
         return render(request, 'government_employee/TenderUpload/tender_delete.html', context=context)
+
+
+def tender_upload_details(request, tender_id):
+    tender = TenderUpload.objects.get(id=tender_id)
+    context = {
+        'tender': tender
+    }
+    return render(request, 'government_employee/TenderUpload/tender_details.html', context=context)
