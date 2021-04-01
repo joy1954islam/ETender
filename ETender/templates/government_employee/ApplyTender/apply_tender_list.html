@@ -28,37 +28,29 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Tender Title</th>
-                                    <th>Ministry Name</th>
-                                    <th>Publish Date</th>
-                                    <th>End Date</th>
-                                    <th>Pdf</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
-                                    <th>Holder List</th>
+                                    <th>Holder Name</th>
+                                    <th>Payment Number</th>
+                                    <th>Payment Status</th>
+                                    <th>Approve Status</th>
+                                    <th>Change Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                    {% for tender in tender %}
+                                    {% for apply_tender in apply_tender %}
                                       <tr>
                                         <td>{{ forloop.counter }}</td>
-                                        <td>{{ tender.title}}</td>
-                                        <td>{{ tender.ministry_name }}</td>
-                                        <td>{{ tender.publish_date }}</td>
-                                        <td>{{ tender.end_date }}</td>
-                                          <td><a target="_blank" href="{{ tender.pdf.url }}">{{ tender.pdf }}</a></td>
-                                        <td style="width: 100px">
-                                            <a href="{% url 'tender_upload_update' tender.id %}" class="btn btn-success"> Update </a>
-                                        </td>
-                                        <td style="width: 100px">
-                                            <a href="{% url 'tender_upload_delete' tender.id %}" class="btn btn-danger"> Delete </a>
-                                        </td>
+                                        <td>{{ apply_tender.tender.title}}</td>
+                                        <td>{{ apply_tender.username }}</td>
+                                        <td>{{ apply_tender.number }}</td>
+                                        <td>{{ apply_tender.payment_status }}</td>
+                                        <td>{{ apply_tender.is_apply }}</td>
                                         <td>
-                                            <a href="{% url 'list_of_apply_tender' tender.id %}" class="btn btn-primary"> List Of Tender Apply Holder </a>
+                                            <a href="#" class="btn btn-primary">Change Status</a>
                                         </td>
                                       </tr>
                                     {% empty %}
                                       <tr>
-                                        <td colspan="8" class="text-center bg-warning">No Tender</td>
+                                        <td colspan="8" class="text-center bg-warning">No Apply Tender Tender</td>
                                       </tr>
                                     {% endfor %}
                             </tbody>

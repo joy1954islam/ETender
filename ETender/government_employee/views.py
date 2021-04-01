@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from .models import *
 from django.contrib.auth.models import User
+from holder.models import ApplyTender
 from .forms import *
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -86,3 +87,11 @@ def tender_upload_details(request, tender_id):
         'tender': tender
     }
     return render(request, 'government_employee/TenderUpload/tender_details.html', context=context)
+
+
+def list_of_apply_tender(request, tender_id):
+    apply_tender = ApplyTender.objects.filter(tender=tender_id)
+    context = {
+        'apply_tender': apply_tender
+    }
+    return render(request, 'government_employee/ApplyTender/apply_tender_list.html', context=context)
