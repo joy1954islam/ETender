@@ -95,3 +95,20 @@ def list_of_apply_tender(request, tender_id):
         'apply_tender': apply_tender
     }
     return render(request, 'government_employee/ApplyTender/apply_tender_list.html', context=context)
+
+
+def change_status_of_apply_tender_holder(request, tender_id):
+    tender = TenderUpload.objects.get(id=tender_id)
+    apply_tender = ApplyTender.objects.get(tender=tender)
+    print(apply_tender)
+    form = ApplyTenderHolderUpdateForm()
+    if request.method == "POST":
+        form = ApplyTenderHolderUpdateForm(request.POST or None, instance=apply_tender)
+        if form.is_valid():
+            form.save()
+            return redirect('list_of_apply_tender', tender_id)
+    if request.method == "GET":
+        context = {
+            'form': form
+        }
+        return render(request, 'government_employee/ApplyTender/apply_tender_status_change.html', context=context)
