@@ -16,7 +16,6 @@ class TenderUpload(models.Model):
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     ministry_name = models.ForeignKey(Ministry, on_delete=models.CASCADE)
     title = models.CharField(max_length=150, verbose_name='Tender Title')
-    amount = models.IntegerField(verbose_name='Tender/Proposal security(Amount in BDT)')
     publish_date = models.DateField(verbose_name='Tender Publish Date')
     end_date = models.DateField(verbose_name='Tender Publish Date End')
     pdf = models.FileField(verbose_name='Tender Details Pdf')

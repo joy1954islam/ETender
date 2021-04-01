@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from holder.views import home_tender_list
+from holder import views as holder
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,7 +25,8 @@ urlpatterns = [
     path('super/admin/', include('SuperAdmin.urls')),
     path('government/employee/', include('government_employee.urls')),
 
-    path('', home_tender_list, name='index'),
+    path('', holder.home_tender_list, name='index'),
+    path('apply/tender/<int:tender_id>/', holder.apply_tender_create, name='apply_tender_create'),
 
 
 ]
