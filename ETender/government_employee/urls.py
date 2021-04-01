@@ -16,5 +16,7 @@ urlpatterns = [
          name='change_status_of_apply_tender_holder'),
     path('apply/tender/holder/details/<int:tender_id>/', apply_tender_holder_details,
          name='apply_tender_holder_details'),
+    path('apply/tender/holder/short/list/<int:tender_id>/<int:user_id>/', short_list_of_apply_tender_holder,
+         name='short_list_of_apply_tender_holder'),
 
 ]

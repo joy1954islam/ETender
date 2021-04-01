@@ -3,3 +3,4 @@ from .models import *
 
 admin.site.register(Holder)
 admin.site.register(TenderUpload)
+admin.site.register(ApplyTenderHolderShortList)

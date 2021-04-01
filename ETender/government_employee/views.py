@@ -91,8 +91,12 @@ def tender_upload_details(request, tender_id):
 
 def list_of_apply_tender(request, tender_id):
     apply_tender = ApplyTender.objects.filter(tender=tender_id)
+    # todo : ApplyTenderHolderShortList query is not valid . ekhane kon user ta apply tender holder short list e ache
+    #  seta dekhte hobe and fronted end e apply korte hobe
+    short_list = ApplyTenderHolderShortList.objects.filter(tender=apply_tender)
     context = {
-        'apply_tender': apply_tender
+        'apply_tender': apply_tender,
+        'short_list': short_list,
     }
     return render(request, 'government_employee/ApplyTender/apply_tender_list.html', context=context)
 
@@ -122,3 +126,19 @@ def change_status_of_apply_tender_holder(request, tender_id):
             'form': form
         }
         return render(request, 'government_employee/ApplyTender/apply_tender_status_change.html', context=context)
+
+
+def short_list_of_apply_tender_holder(request, tender_id, user_id):
+    tender = TenderUpload.objects.get(id=tender_id)
+    apply_tender = ApplyTender.objects.get(tender=tender)
+    user = User.objects.get(id=user_id)
+    short_list = ApplyTenderHolderShortList()
+    short_list.tender = apply_tender
+    short_list.username = user
+    exists_user = ApplyTenderHolderShortList.objects.filter(tender=apply_tender, username=user)
+    if exists_user.exists():
+        exists_user =None
+        return redirect(reverse('list_of_apply_tender'))
+    else:
+        short_list.save()
+        return redirect('list_of_apply_tender', tender_id)

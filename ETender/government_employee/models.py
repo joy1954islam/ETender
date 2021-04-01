@@ -23,3 +23,11 @@ class TenderUpload(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ApplyTenderHolderShortList(models.Model):
+    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    tender = models.ForeignKey('holder.ApplyTender', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.tender)
