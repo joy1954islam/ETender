@@ -20,7 +20,7 @@ def list_of_apply_tender(request):
     return render(request, 'Holder/ApplyHolder/apply_tender_list.html', context=context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='log_in')
 def apply_tender_create(request, tender_id):
     tender = TenderUpload.objects.get(id=tender_id)
     form = ApplyTenderForm()

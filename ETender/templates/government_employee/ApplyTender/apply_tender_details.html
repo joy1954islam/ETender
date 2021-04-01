@@ -1,0 +1,93 @@
+{% extends 'government_employee/government_employee.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1>Tender Name: {{ apply_tender.tender.title }} Details</h1>
+<button type="button" class="btn btn-primary btn-lg btn-block">Tender User Details</button>
+<br>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+         <th scope="col">User Name</th>
+         <td>{{ apply_tender.username }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Email</th>
+         <td>{{ apply_tender.username.email }}</td>
+    </tr>
+    <tr>
+         <th scope="col">First Name</th>
+         <td>{{ apply_tender.username.first_name }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Last Name</th>
+         <td>{{ apply_tender.username.last_name }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Address</th>
+         <td>{{ apply_tender.username.address }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Phone Number</th>
+         <td>{{ apply_tender.username.phone_number }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Licence Number</th>
+         <td>{{ apply_tender.username.holder.lisence_number }}</td>
+    </tr>
+
+    <tr>
+         <th scope="col">Image</th>
+         <td>
+             <img src="{{ tender.username.image.url }}" height="80px;" width="80px;">
+         </td>
+    </tr>
+  </thead>
+</table>
+<button type="button" class="btn btn-info btn-lg btn-block">Apply Tender Details</button>
+<br>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+         <th scope="col">User Name</th>
+         <td>{{ apply_tender.username }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Tender Name</th>
+         <td>{{ apply_tender.tender }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Payment Phone Number</th>
+         <td>{{ apply_tender.number }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Trx Id</th>
+         <td>{{ apply_tender.trx_id }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Bank Trx ID</th>
+         <td>{{ apply_tender.bank_trx_id }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Proposal PDF</th>
+         <td>
+             <a target="_blank" href="{{ apply_tender.proposal_pdf.url }}">{{ apply_tender.proposal_pdf }}</a>
+         </td>
+    </tr>
+    <tr>
+         <th scope="col">Working Experience</th>
+         <td>{{ apply_tender.working_exprience }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Payment Status</th>
+         <td>{{ apply_tender.payment_status }}</td>
+    </tr>
+    <tr>
+         <th scope="col">Approved Status</th>
+         <td>{{ apply_tender.is_apply }}</td>
+    </tr>
+  </thead>
+</table>
+<a href="{% url 'list_of_apply_tender' apply_tender.id %}" type="button" class="btn btn-success btn-lg btn-block">Back</a>
+{% endblock content %}

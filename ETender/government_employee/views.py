@@ -97,6 +97,16 @@ def list_of_apply_tender(request, tender_id):
     return render(request, 'government_employee/ApplyTender/apply_tender_list.html', context=context)
 
 
+def apply_tender_holder_details(request, tender_id):
+    tender = TenderUpload.objects.get(id=tender_id)
+    apply_tender = ApplyTender.objects.get(tender=tender)
+
+    context = {
+        'apply_tender': apply_tender
+    }
+    return render(request, 'government_employee/ApplyTender/apply_tender_details.html', context=context)
+
+
 def change_status_of_apply_tender_holder(request, tender_id):
     tender = TenderUpload.objects.get(id=tender_id)
     apply_tender = ApplyTender.objects.get(tender=tender)

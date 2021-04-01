@@ -24,6 +24,7 @@
                                     <th>Payment Number</th>
                                     <th>Payment Status</th>
                                     <th>Approve Status</th>
+                                    <th>details</th>
                                     <th>Change Status</th>
                                 </tr>
                             </thead>
@@ -37,6 +38,9 @@
                                         <td>{{ apply_tender.payment_status }}</td>
                                         <td>{{ apply_tender.is_apply }}</td>
                                         <td>
+                                            <a href="{% url 'apply_tender_holder_details' apply_tender.id %}" class="btn btn-info">Details</a>
+                                        </td>
+                                          <td>
                                             <a href="{% url 'change_status_of_apply_tender_holder' apply_tender.id %}" class="btn btn-primary">Change Status</a>
                                         </td>
                                       </tr>
