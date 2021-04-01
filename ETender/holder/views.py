@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from government_employee.models import TenderUpload
 from .forms import *
+from django.contrib.auth.decorators import login_required
 
 
 def home_tender_list(request):
@@ -11,6 +12,15 @@ def home_tender_list(request):
     return render(request, 'index.html', context=context)
 
 
+def list_of_apply_tender(request):
+    apply_tender = ApplyTender.objects.filter(username=request.user)
+    context = {
+        'apply_tender': apply_tender
+    }
+    return render(request, 'Holder/ApplyHolder/apply_tender_list.html', context=context)
+
+
+@login_required(login_url='login')
 def apply_tender_create(request, tender_id):
     tender = TenderUpload.objects.get(id=tender_id)
     form = ApplyTenderForm()

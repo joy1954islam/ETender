@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('', holder.home_tender_list, name='index'),
     path('apply/tender/<int:tender_id>/', holder.apply_tender_create, name='apply_tender_create'),
+    path('apply/tender/holder/list/', holder.list_of_apply_tender, name='list_of_apply_tender'),
 
 
 ]

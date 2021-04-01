@@ -30,7 +30,7 @@
             <li><a href="{% url 'government_employee_home' %}">My Dashboard</a></li>
             <li><a href="{% url 'log_out'%}">Log out</a></li>
           {% elif request.user.is_authenticated and request.user.is_tender_holder %}
-            <li><a href="{% url 'index' %}">My Dashboard</a></li>
+            <li><a href="{% url 'list_of_apply_tender' %}">My Apply Tender</a></li>
             <li><a href="{% url 'log_out'%}">Log out</a></li>
           {% else %}
             <li><a href="{% url 'sign_up' %}">Create Account</a></li>
