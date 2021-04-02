@@ -2,6 +2,7 @@ from django.shortcuts import render
 from government_employee.models import TenderUpload
 from .forms import *
 from django.contrib.auth.decorators import login_required
+from government_employee.models import ApplyTenderHolderShortList
 
 
 def home_tender_list(request):
@@ -46,3 +47,13 @@ def apply_tender_create(request, tender_id):
             'form': form
         }
         return render(request, 'Holder/ApplyHolder/apply_holder_create.html', context=context)
+
+
+def holder_list_of_holder_short_list(request, tender_id):
+    tender = TenderUpload.objects.get(id=tender_id)
+    apply_tender = ApplyTender.objects.get(tender=tender)
+    short_list = ApplyTenderHolderShortList.objects.filter(tender=apply_tender)
+    context = {
+        'short_list': short_list
+    }
+    return render(request, 'Holder/ApplyHolder/apply_tender_holder_short_list.html', context=context)

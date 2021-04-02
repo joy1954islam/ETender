@@ -14,6 +14,7 @@
                   <th scope="col">End Date</th>
                   <th scope="col">Extra Details In Pdf</th>
                   <th scope="col"> Details </th>
+                  <th scope="col"> Apply Holder Short List </th>
                 </tr>
           </thead>
           <tbody>
@@ -27,6 +28,7 @@
                   <td>{{ tender.end_date}}</td>
                   <td><a href="{{ tender.pdf.url }}" target="_blank">{{ tender.pdf }}</a></td>
                   <td><a href="{% url 'tender_upload_details' tender.id %}" class="btn btn-primary">Details</a></td>
+                  <td><a href="{% url 'holder_list_of_holder_short_list' tender.id %}" class="btn btn-info">Apply Holder Short List</a></td>
                </tr>
            {% endfor %}
           </tbody>

@@ -35,6 +35,7 @@
                                     <th>Update</th>
                                     <th>Delete</th>
                                     <th>Holder List</th>
+                                    <th>Holder Short List</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,14 +47,17 @@
                                         <td>{{ tender.publish_date }}</td>
                                         <td>{{ tender.end_date }}</td>
                                           <td><a target="_blank" href="{{ tender.pdf.url }}">{{ tender.pdf }}</a></td>
-                                        <td style="width: 100px">
+                                        <td>
                                             <a href="{% url 'tender_upload_update' tender.id %}" class="btn btn-success"> Update </a>
                                         </td>
-                                        <td style="width: 100px">
+                                        <td >
                                             <a href="{% url 'tender_upload_delete' tender.id %}" class="btn btn-danger"> Delete </a>
                                         </td>
                                         <td>
                                             <a href="{% url 'list_of_apply_tender' tender.id %}" class="btn btn-primary"> List Of Tender Apply Holder </a>
+                                        </td>
+                                       <td>
+                                            <a href="{% url 'list_of_holder_short_list' tender.id %}" class="btn btn-info"> List Of Holder Short List </a>
                                         </td>
                                       </tr>
                                     {% empty %}
