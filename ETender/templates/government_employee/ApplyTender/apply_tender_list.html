@@ -45,7 +45,7 @@
                                             <a href="{% url 'change_status_of_apply_tender_holder' apply_tender.id %}" class="btn btn-primary">Change Status</a>
                                         </td>
                                         <td>
-                                            <a href="{% url 'short_list_of_apply_tender_holder' apply_tender.id apply_tender.username.id %}" class="btn btn-success">Add to Short List Holder</a>
+                                            <a href="{% url 'short_list_of_apply_tender_holder' apply_tender.tender.id apply_tender.username.id %}" class="btn btn-success">Add to Short List Holder</a>
                                         </td>
                                       </tr>
                                     {% empty %}

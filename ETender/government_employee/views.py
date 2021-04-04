@@ -99,9 +99,10 @@ def list_of_apply_tender(request, tender_id):
 
 
 def apply_tender_holder_details(request, tender_id):
-    tender = TenderUpload.objects.get(id=tender_id)
-    apply_tender = ApplyTender.objects.get(tender=tender)
-
+    # tender = TenderUpload.objects.get(id=tender_id)
+    # print('tender', tender)
+    apply_tender = ApplyTender.objects.get(id=tender_id)
+    print('apply tender', apply_tender)
     context = {
         'apply_tender': apply_tender
     }
@@ -109,15 +110,14 @@ def apply_tender_holder_details(request, tender_id):
 
 
 def change_status_of_apply_tender_holder(request, tender_id):
-    tender = TenderUpload.objects.get(id=tender_id)
-    apply_tender = ApplyTender.objects.get(tender=tender)
-    print(apply_tender)
-    form = ApplyTenderHolderUpdateForm()
+    apply_tender = ApplyTender.objects.get(id=tender_id)
+    tender = TenderUpload.objects.get(title=apply_tender)
+    form = ApplyTenderHolderUpdateForm(instance=apply_tender)
     if request.method == "POST":
         form = ApplyTenderHolderUpdateForm(request.POST or None, instance=apply_tender)
         if form.is_valid():
             form.save()
-            return redirect('list_of_apply_tender', tender_id)
+            return redirect('list_of_apply_tender', tender.id)
     if request.method == "GET":
         context = {
             'form': form
@@ -126,25 +126,27 @@ def change_status_of_apply_tender_holder(request, tender_id):
 
 
 def short_list_of_apply_tender_holder(request, tender_id, user_id):
-    tender = TenderUpload.objects.get(id=tender_id)
-    apply_tender = ApplyTender.objects.get(tender=tender)
+    # tender = TenderUpload.objects.get(id=tender_id)
+    apply_tender = ApplyTender.objects.get(id=tender_id)
+    print('apply tender', apply_tender)
+    tender = TenderUpload.objects.get(title=apply_tender)
     user = User.objects.get(id=user_id)
+    print('user', user)
     short_list = ApplyTenderHolderShortList()
     short_list.tender = apply_tender
     short_list.username = user
     exists_user = ApplyTenderHolderShortList.objects.filter(tender=apply_tender, username=user)
     if exists_user.exists():
         messages.add_message(request, messages.INFO, 'This User Is Already Short Listed')
-        return redirect('list_of_apply_tender', tender_id)
+        return redirect('list_of_apply_tender', tender.id)
     else:
         short_list.save()
-        return redirect('list_of_apply_tender', tender_id)
+        return redirect('list_of_apply_tender', tender.id)
 
 
 def list_of_holder_short_list(request, tender_id):
-    tender = TenderUpload.objects.get(id=tender_id)
-    apply_tender = ApplyTender.objects.get(tender=tender)
-    short_list = ApplyTenderHolderShortList.objects.filter(tender=apply_tender)
+    short_list = ApplyTenderHolderShortList.objects.filter(tender_id=tender_id)
+    print('short list holder', short_list)
     context = {
         'short_list': short_list
     }
