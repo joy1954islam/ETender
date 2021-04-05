@@ -25,4 +25,9 @@ urlpatterns = [
     path('apply/tender/holder/winner/list/<int:tender_id>/', winner_holder_list,
          name='winner_holder_list'),
 
+    path('change/profile/', government_employee__profile, name='government_change_profile'),
+    path('change/password/', ChangePasswordView.as_view(), name='government_change_password'),
+    path('change/email/', ChangeEmailView.as_view(), name='government_change_email'),
+    path('change/email/<code>/', ChangeEmailActivateView.as_view(), name='government_change_email_activation'),
+
 ]

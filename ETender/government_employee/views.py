@@ -1,11 +1,30 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import *
 import random
 from django.contrib.auth.models import User
+from django.contrib.auth.views import (
+    LogoutView as BaseLogoutView, PasswordChangeView as BasePasswordChangeView,
+)
+from django.contrib.auth import login
+from accounts.models import Activation
+from django.utils.crypto import get_random_string
+from django.views.generic import View, FormView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from accounts.utils import (
+    send_activation_email, send_reset_password_email, send_forgotten_username_email, send_activation_change_email,
+)
+from accounts.forms import (
+    SignInViaUsernameForm, SignInViaEmailForm, SignInViaEmailOrUsernameForm, SignUpForm,
+    RestorePasswordForm, RestorePasswordViaEmailOrUsernameForm, RemindUsernameForm,
+    ResendActivationCodeForm, ResendActivationCodeViaEmailForm, ChangeProfileForm, ChangeEmailForm
+)
 from django.contrib import messages
 from holder.models import ApplyTender
 from .forms import *
 from django.contrib.auth import get_user_model
+
+from accounts.forms import UserUpdateForm
+
 User = get_user_model()
 
 
@@ -22,7 +41,7 @@ def register_holder_list(request):
 
 
 def tender_upload_list(request):
-    tender = TenderUpload.objects.all()
+    tender = TenderUpload.objects.filter(username=request.user)
     context = {
         'tender': tender
     }
@@ -170,3 +189,91 @@ def winner_holder_list(request, tender_id):
         'winner_holder': winner_holder
     }
     return render(request, 'government_employee/ApplyTender/wiiner_holder_list.html', context=context)
+
+
+def government_employee__profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST or None, request.FILES or None, instance=request.user)
+        if u_form.is_valid():
+            u_form.save()
+            messages.success(request, f'Your account has been updated')
+            return redirect('government_change_profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+
+    context = {
+        'u_form': u_form
+    }
+    return render(request, 'government_employee/profile/GovernmentEmployeeProfile.html', context)
+
+
+class ChangeEmailView(LoginRequiredMixin, FormView):
+    template_name = 'government_employee/profile/change_email.html'
+    form_class = ChangeEmailForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['email'] = self.request.user.email
+        return initial
+
+    def form_valid(self, form):
+        user = self.request.user
+        email = form.cleaned_data['email']
+
+        if settings.ENABLE_ACTIVATION_AFTER_EMAIL_CHANGE:
+            code = get_random_string(20)
+
+            act = Activation()
+            act.code = code
+            act.user = user
+            act.email = email
+            act.save()
+
+            send_activation_change_email(self.request, email, code)
+
+            messages.success(self.request, f'To complete the change of email address, click on the link sent to it.')
+        else:
+            user.email = email
+            user.save()
+
+            messages.success(self.request, f'Email successfully changed.')
+
+        return redirect('government_change_email')
+
+
+class ChangeEmailActivateView(View):
+    @staticmethod
+    def get(request, code):
+        act = get_object_or_404(Activation, code=code)
+
+        # Change the email
+        user = act.user
+        user.email = act.email
+        user.save()
+
+        # Remove the activation record
+        act.delete()
+
+        messages.success(request, f'You have successfully changed your email!')
+
+        return redirect('government_change_email')
+
+
+class ChangePasswordView(BasePasswordChangeView):
+    template_name = 'government_employee/profile/change_password.html'
+
+    def form_valid(self, form):
+        # Change the password
+        user = form.save()
+
+        # Re-authentication
+        login(self.request, user)
+
+        messages.success(self.request, f'Your password was changed.')
+
+        return redirect('government_change_password')
