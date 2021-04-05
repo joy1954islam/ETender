@@ -1,0 +1,74 @@
+{% extends 'Base/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<br>
+
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Apply Tender Winner Holder</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table class="table" id="datatable-buttons"  style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>S. NO.</th>
+                                    <th>Tender Name</th>
+                                    <th>Holder Name</th>
+                                    <th>Holder Phone Number</th>
+                                    <th>Holder Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    {% for winner_holder in winner_holder %}
+                                         <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ winner_holder.tender }}</td>
+                                            <td>{{ winner_holder.username }}</td>
+                                            <td>{{ winner_holder.username.phone_number }}</td>
+                                            <td>{{ winner_holder.username.email }}</td>
+                                         </tr>
+                                    {% empty %}
+                                      <tr>
+                                        <td colspan="8" class="text-center bg-warning">No Winner Tender List</td>
+                                      </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if winner_holder.has_other_pages %}
+                            <nav aria-label="event-pagination" id="pagination">
+                                <ul class="pagination">
+                                    {% if winner_holder.has_previous %}
+                                        <li class="page-item"><a href="?page={{ winner_holder.previous_page_number }}" class="page-link">&laquo;</a></li>
+                                    {% else %}
+                                        <li class="page-item disabled" ><span class="page-link">&laquo;</span></li>
+                                    {% endif %}
+                                    {% for i in winner_holder.paginator.page_range %}
+                                        {% if winner_holder.number == i %}
+                                            <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                                        {% else %}
+                                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if winner_holder.has_next %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ winner_holder.next_page_number }}">&raquo;</a></li>
+                                    {% else %}
+                                        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -86,3 +86,20 @@ def holder_winner_holder_list(request, tender_id):
         'winner_holder': winner_holder
     }
     return render(request, 'Holder/ApplyHolder/winner_holder_list.html', context=context)
+
+
+def user_winner_holder_list(request):
+    winner_holder = WinnerHolder.objects.filter(username=request.user)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(winner_holder, 10)
+    try:
+        winner_holder = paginator.page(page)
+    except PageNotAnInteger:
+        winner_holder = paginator.page(1)
+    except EmptyPage:
+        winner_holder = paginator.page(paginator.num_pages)
+
+    context = {
+        'winner_holder': winner_holder
+    }
+    return render(request, 'Holder/ApplyHolder/my_tender_list.html', context=context)

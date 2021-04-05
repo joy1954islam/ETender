@@ -32,6 +32,8 @@ urlpatterns = [
          name='holder_list_of_holder_short_list'),
     path('apply/tender/holder/winner/list/<int:tender_id>/', holder.holder_winner_holder_list,
          name='holder_winner_holder_list'),
+    path('my/tender/list/', holder.user_winner_holder_list,
+         name='user_winner_holder_list'),
 
 
 ]

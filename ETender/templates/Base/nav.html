@@ -4,7 +4,7 @@
           <li class="active"><a href="{% url 'index' %}">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
-          <li><a href="">My Tender List</a></li>
+
           {% if request.user.is_authenticated and request.user.is_superuser %}
             <li><a href="{% url 'SuperAdminHome' %}">My Dashboard</a></li>
             <li><a href="{% url 'log_out'%}">Log out</a></li>
@@ -13,6 +13,7 @@
             <li><a href="{% url 'log_out'%}">Log out</a></li>
           {% elif request.user.is_authenticated and request.user.is_tender_holder %}
             <li><a href="{% url 'list_of_apply_tender' %}">My Apply Tender</a></li>
+            <li><a href="{% url 'user_winner_holder_list' %}">My Tender List</a></li>
             <li class="drop-down"><a href="">My Dashboard</a>
                     <ul>
                           <li><a href="{% url 'change_profile' %}">My Profile</a></li>
