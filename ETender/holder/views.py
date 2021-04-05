@@ -2,13 +2,24 @@ from django.shortcuts import render
 from government_employee.models import TenderUpload
 from .forms import *
 from django.contrib.auth.decorators import login_required
-from government_employee.models import ApplyTenderHolderShortList
+from government_employee.models import ApplyTenderHolderShortList, WinnerHolder
 from .filters import *
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def home_tender_list(request):
     tender = TenderUpload.objects.all()
     MyFilter = TenderUploadFilter(request.GET, queryset=tender)
+    tender = MyFilter.qs
+    page = request.GET.get('page', 1)
+    paginator = Paginator(tender, 10)
+    try:
+        tender = paginator.page(page)
+    except PageNotAnInteger:
+        tender = paginator.page(1)
+    except EmptyPage:
+        tender = paginator.page(paginator.num_pages)
+
     context = {
         'tender': tender,
         'MyFilter': MyFilter
@@ -18,6 +29,15 @@ def home_tender_list(request):
 
 def list_of_apply_tender(request):
     apply_tender = ApplyTender.objects.filter(username=request.user)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(apply_tender, 10)
+    try:
+        apply_tender = paginator.page(page)
+    except PageNotAnInteger:
+        apply_tender = paginator.page(1)
+    except EmptyPage:
+        apply_tender = paginator.page(paginator.num_pages)
+
     context = {
         'apply_tender': apply_tender
     }
@@ -53,10 +73,16 @@ def apply_tender_create(request, tender_id):
 
 
 def holder_list_of_holder_short_list(request, tender_id):
-    tender = TenderUpload.objects.get(id=tender_id)
-    apply_tender = ApplyTender.objects.get(tender=tender)
-    short_list = ApplyTenderHolderShortList.objects.filter(tender=apply_tender)
+    short_list = ApplyTenderHolderShortList.objects.filter(tender_id=tender_id)
     context = {
         'short_list': short_list
     }
     return render(request, 'Holder/ApplyHolder/apply_tender_holder_short_list.html', context=context)
+
+
+def holder_winner_holder_list(request, tender_id):
+    winner_holder = WinnerHolder.objects.filter(tender=tender_id)
+    context = {
+        'winner_holder': winner_holder
+    }
+    return render(request, 'Holder/ApplyHolder/winner_holder_list.html', context=context)

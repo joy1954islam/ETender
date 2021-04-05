@@ -1,12 +1,12 @@
 {% extends 'Base/base.html' %}
-
+{% load widget_tweaks %}
 {% block content %}
     <br>
     <h1>Tender List</h1>
-    <form method="get">
-       {{ MyFilter.form }}
-       <button class="btn btn-primary" type="submit">Search</button>
-    </form>
+<form method="get">
+   {{ MyFilter.form }}
+   <button class="btn btn-primary" type="submit">Search</button>
+ </form>
     <table class="table">
           <thead class="thead-light">
                 <tr>
@@ -34,9 +34,37 @@
                   <td><a href="{{ tender.pdf.url }}" target="_blank">{{ tender.pdf }}</a></td>
                   <td><a href="{% url 'tender_upload_details' tender.id %}" class="btn btn-primary">Details</a></td>
                   <td><a href="{% url 'holder_list_of_holder_short_list' tender.id %}" class="btn btn-info">Apply Holder Short List</a></td>
-                  <td><a href="{% url 'holder_list_of_holder_short_list' tender.id %}" class="btn btn-success">Winner Holder</a></td>
+                  <td><a href="{% url 'holder_winner_holder_list' tender.id %}" class="btn btn-success">Winner Holder</a></td>
                </tr>
-           {% endfor %}
+          {% empty %}
+                <tr>
+                  <td colspan="5">No Tender </td>
+                </tr>
+          {% endfor %}
           </tbody>
     </table>
+    {% if tender.has_other_pages %}
+            <nav aria-label="event-pagination" id="pagination">
+                <ul class="pagination">
+                    {% if tender.has_previous %}
+                        <li class="page-item"><a href="?page={{ tender.previous_page_number }}" class="page-link">&laquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled" ><span class="page-link">&laquo;</span></li>
+                    {% endif %}
+                    {% for i in tender.paginator.page_range %}
+                        {% if tender.number == i %}
+                            <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if tender.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ tender.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            </nav>
+    {% endif %}
+
 {% endblock content %}

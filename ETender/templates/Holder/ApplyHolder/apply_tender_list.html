@@ -42,6 +42,29 @@
                                     {% endfor %}
                             </tbody>
                         </table>
+                        {% if apply_tender.has_other_pages %}
+                            <nav aria-label="event-pagination" id="pagination">
+                                <ul class="pagination">
+                                    {% if apply_tender.has_previous %}
+                                        <li class="page-item"><a href="?page={{ apply_tender.previous_page_number }}" class="page-link">&laquo;</a></li>
+                                    {% else %}
+                                        <li class="page-item disabled" ><span class="page-link">&laquo;</span></li>
+                                    {% endif %}
+                                    {% for i in apply_tender.paginator.page_range %}
+                                        {% if apply_tender.number == i %}
+                                            <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                                        {% else %}
+                                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if apply_tender.has_next %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ apply_tender.next_page_number }}">&raquo;</a></li>
+                                    {% else %}
+                                        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        {% endif %}
                     </div>
                 </div>
             </div>
