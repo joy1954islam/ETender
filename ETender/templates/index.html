@@ -1,8 +1,12 @@
 {% extends 'Base/base.html' %}
 
 {% block content %}
-<br>
-<h1>Tender List</h1>
+    <br>
+    <h1>Tender List</h1>
+    <form method="get">
+       {{ MyFilter.form }}
+       <button class="btn btn-primary" type="submit">Search</button>
+    </form>
     <table class="table">
           <thead class="thead-light">
                 <tr>

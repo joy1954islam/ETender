@@ -3,12 +3,15 @@ from government_employee.models import TenderUpload
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from government_employee.models import ApplyTenderHolderShortList
+from .filters import *
 
 
 def home_tender_list(request):
-    tender = TenderUpload.objects.all()[:5]
+    tender = TenderUpload.objects.all()
+    MyFilter = TenderUploadFilter(request.GET, queryset=tender)
     context = {
-        'tender': tender
+        'tender': tender,
+        'MyFilter': MyFilter
     }
     return render(request, 'index.html', context=context)
 
