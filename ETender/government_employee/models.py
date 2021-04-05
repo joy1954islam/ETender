@@ -34,8 +34,8 @@ class ApplyTenderHolderShortList(models.Model):
 
 
 class WinnerHolder(models.Model):
-    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    tender = models.ForeignKey('holder.ApplyTender', on_delete=models.CASCADE)
+    username = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    tender = models.OneToOneField('holder.ApplyTender', on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.tender)

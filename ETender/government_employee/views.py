@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from .models import *
+import random
 from django.contrib.auth.models import User
 from django.contrib import messages
 from holder.models import ApplyTender
@@ -99,10 +100,7 @@ def list_of_apply_tender(request, tender_id):
 
 
 def apply_tender_holder_details(request, tender_id):
-    # tender = TenderUpload.objects.get(id=tender_id)
-    # print('tender', tender)
     apply_tender = ApplyTender.objects.get(id=tender_id)
-    print('apply tender', apply_tender)
     context = {
         'apply_tender': apply_tender
     }
@@ -126,12 +124,9 @@ def change_status_of_apply_tender_holder(request, tender_id):
 
 
 def short_list_of_apply_tender_holder(request, tender_id, user_id):
-    # tender = TenderUpload.objects.get(id=tender_id)
     apply_tender = ApplyTender.objects.get(id=tender_id)
-    print('apply tender', apply_tender)
     tender = TenderUpload.objects.get(title=apply_tender)
     user = User.objects.get(id=user_id)
-    print('user', user)
     short_list = ApplyTenderHolderShortList()
     short_list.tender = apply_tender
     short_list.username = user
@@ -146,8 +141,32 @@ def short_list_of_apply_tender_holder(request, tender_id, user_id):
 
 def list_of_holder_short_list(request, tender_id):
     short_list = ApplyTenderHolderShortList.objects.filter(tender_id=tender_id)
-    print('short list holder', short_list)
     context = {
         'short_list': short_list
     }
     return render(request, 'government_employee/ApplyTender/apply_tender_holder_short_list.html', context=context)
+
+
+def winner_holder(request, tender_id):
+    holder_short_list = ApplyTenderHolderShortList.objects.filter(tender=tender_id)
+    w = WinnerHolder.objects.filter(tender=tender_id)
+    if w.exists():
+        messages.add_message(request, messages.INFO, 'This Tender Is Already Winner Listed')
+        return redirect('winner_holder_list', tender_id)
+    else:
+        winner = random.choice(holder_short_list)
+        winner_tender = winner.tender
+        winner_username = winner.username
+        winner_holder = WinnerHolder()
+        winner_holder.tender = winner_tender
+        winner_holder.username = winner_username
+        winner_holder.save()
+        return redirect('winner_holder_list', tender_id)
+
+
+def winner_holder_list(request, tender_id):
+    winner_holder = WinnerHolder.objects.filter(tender=tender_id)
+    context = {
+        'winner_holder': winner_holder
+    }
+    return render(request, 'government_employee/ApplyTender/wiiner_holder_list.html', context=context)

@@ -1,0 +1,51 @@
+{% extends 'government_employee/government_employee.html' %}
+
+{% load static %}
+
+{% block content %}
+<br>
+
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Button Example <small>Users</small></h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table class="table" id="datatable-buttons"  style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>S. NO.</th>
+                                    <th>Tender Name</th>
+                                    <th>Holder Name</th>
+                                    <th>Holder Phone Number</th>
+                                    <th>Holder Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    {% for winner_holder in winner_holder %}
+                                         <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ winner_holder.tender }}</td>
+                                            <td>{{ winner_holder.username }}</td>
+                                            <td>{{ winner_holder.username.phone_number }}</td>
+                                            <td>{{ winner_holder.username.email }}</td>
+                                         </tr>
+                                    {% empty %}
+                                      <tr>
+                                        <td colspan="8" class="text-center bg-warning">No Winner List Holder</td>
+                                      </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
