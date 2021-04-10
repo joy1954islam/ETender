@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import (
     LogoutView as BaseLogoutView, PasswordChangeView as BasePasswordChangeView,
 )
+from django.core.mail import send_mail
+
 from django.contrib.auth import login
 from accounts.models import Activation
 from django.utils.crypto import get_random_string
@@ -180,6 +182,15 @@ def winner_holder(request, tender_id):
         winner_holder.tender = winner_tender
         winner_holder.username = winner_username
         winner_holder.save()
+        to_email = winner.username.email
+        print(to_email)
+        # send_mail(
+        #     'You are Winner Tender',
+        #     'Here is the message.',
+        #     'settings.EMAIL_HOST_USER',
+        #     ['to_email'],
+        #     fail_silently=False,
+        # )
         return redirect('winner_holder_list', tender_id)
 
 
