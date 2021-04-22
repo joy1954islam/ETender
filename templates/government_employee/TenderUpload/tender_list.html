@@ -34,10 +34,10 @@
                                     <th>Pdf</th>
                                     <th>Update</th>
                                     <th>Delete</th>
-                                    <th>Holder List</th>
-                                    <th>Holder Short List</th>
-                                    <th>Create Winner Holder </th>
-                                    <th>Winner Holder List</th>
+                                    <th>Tender Applicant</th>
+                                    <th>Selected Tender Holder</th>
+                                    <th>Add Tender Winner </th>
+                                    <th>Tender Winner</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,16 +56,16 @@
                                             <a href="{% url 'tender_upload_delete' tender.id %}" class="btn btn-danger"> Delete </a>
                                         </td>
                                         <td>
-                                            <a href="{% url 'list_of_apply_tender' tender.id %}" class="btn btn-primary"> List Of Tender Apply Holder </a>
+                                            <a href="{% url 'list_of_apply_tender' tender.id %}" class="btn btn-primary"> List of Tender Applicant </a>
                                         </td>
                                        <td>
-                                            <a href="{% url 'list_of_holder_short_list' tender.id %}" class="btn btn-info"> List Of Holder Short List </a>
+                                            <a href="{% url 'list_of_holder_short_list' tender.id %}" class="btn btn-info"> Selected Tender Holder </a>
                                        </td>
                                        <td>
-                                            <a href="{% url 'winner_holder' tender.id %}" class="btn btn-danger">Create Winner Holder </a>
+                                            <a href="{% url 'winner_holder' tender.id %}" class="btn btn-danger">Add Tender Winner </a>
                                        </td>
                                        <td>
-                                            <a href="{% url 'winner_holder_list' tender.id %}" class="btn btn-primary">List Of Winner Holder </a>
+                                            <a href="{% url 'winner_holder_list' tender.id %}" class="btn btn-primary">List Of Tender Winner </a>
                                        </td>
                                       </tr>
                                     {% empty %}
