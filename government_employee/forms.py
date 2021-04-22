@@ -4,8 +4,9 @@ from holder.models import ApplyTender
 
 
 class TenderUploadForm(forms.ModelForm):
-    publish_date = forms.DateField(widget=forms.SelectDateWidget)
-    end_date = forms.DateField(widget=forms.SelectDateWidget)
+
+    publish_date = forms.DateField(widget=forms.widgets.DateInput(attrs={"type": "date"}))
+    end_date = forms.DateField(widget=forms.widgets.DateInput(attrs={"type": "date"}))
 
     class Meta:
         model = TenderUpload
