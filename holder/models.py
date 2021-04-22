@@ -10,7 +10,7 @@ class ApplyTender(models.Model):
     trx_id = models.CharField(max_length=35, null=True, blank=True, verbose_name='Tender Free Trx ID')
     bank_trx_id = models.IntegerField(verbose_name='Security Money Trx ID')
     proposal_pdf = models.FileField(verbose_name='Proposal PDF')
-    working_exprience = models.IntegerField(verbose_name='Working Experience')
+    working_exprience = models.TextField(verbose_name='Working Experience')
     Payment = (
         ('Pending', 'Pending'),
         ('Accept', 'Accept'),
