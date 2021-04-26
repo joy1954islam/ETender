@@ -1,0 +1,62 @@
+{% extends 'government_employee/government_employee.html' %}
+
+{% load static %}
+
+{% block content %}
+<br>
+  <p>
+
+      <a href="#" type="button" style="float:right;" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus"></span>
+      Create a Tender Notice
+      </a>
+
+  </p>
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Button Example <small>Users</small></h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table class="table" id="datatable-buttons"  style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>S. No.</th>
+                                    <th>Tender Name</th>
+                                    <th>Tender Notice</th>
+                                    <th>Update</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    {% for tender_notice in tender_notice %}
+                                      <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ tender_notice.tender}}</td>
+                                        <td>{{ tender_notice.notice }}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-success"> Update </a>
+                                        </td>
+                                        <td >
+                                            <a href="#" class="btn btn-danger"> Delete </a>
+                                        </td>
+                                      </tr>
+                                    {% empty %}
+                                      <tr>
+                                        <td colspan="8" class="text-center bg-warning">No Tender Notice Here</td>
+                                      </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

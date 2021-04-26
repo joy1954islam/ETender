@@ -288,3 +288,12 @@ class ChangePasswordView(BasePasswordChangeView):
         messages.success(self.request, f'Your password was changed.')
 
         return redirect('government_change_password')
+
+
+def tender_notice_list(request, tender_id):
+    tender_notice = TenderNotice.objects.filter(id=tender_id)
+    context = {
+        'tender_notice': tender_notice,
+        'tender_id': tender_id
+    }
+    return render(request, 'government_employee/TenderNotice/tender_notice_list.html', context=context)

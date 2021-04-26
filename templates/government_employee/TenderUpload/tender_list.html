@@ -38,6 +38,7 @@
                                     <th>Selected Tender Holder</th>
                                     <th>Add Tender Winner </th>
                                     <th>Tender Winner</th>
+                                    <th>List of Tender Notice</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,6 +67,9 @@
                                        </td>
                                        <td>
                                             <a href="{% url 'winner_holder_list' tender.id %}" class="btn btn-primary">List Of Tender Winner </a>
+                                       </td>
+                                       <td>
+                                            <a href="{% url 'tender_notice_list' tender.id %}" class="btn btn-secondary">List Of Tender Notice </a>
                                        </td>
                                       </tr>
                                     {% empty %}
