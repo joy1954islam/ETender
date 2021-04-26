@@ -103,3 +103,7 @@ def user_winner_holder_list(request):
         'winner_holder': winner_holder
     }
     return render(request, 'Holder/ApplyHolder/my_tender_list.html', context=context)
+
+
+def about(request):
+    return render(request, 'about.html')

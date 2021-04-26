@@ -35,6 +35,7 @@ urlpatterns = [
     path('my/tender/list/', holder.user_winner_holder_list,
          name='user_winner_holder_list'),
 
+    path('about/', holder.about, name='about'),
 
 ]
 if settings.DEBUG:
