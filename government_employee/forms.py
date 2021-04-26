@@ -17,3 +17,9 @@ class ApplyTenderHolderUpdateForm(forms.ModelForm):
     class Meta:
         model = ApplyTender
         fields = ['payment_status', 'is_apply']
+
+
+class TenderNoticeForm(forms.ModelForm):
+    class Meta:
+        model = TenderNotice
+        fields = ['notice']
