@@ -314,3 +314,20 @@ def tender_notice_create(request, tender_id):
         'tender': tender
     }
     return render(request, 'government_employee/TenderNotice/tender_notice_create.html', context=context)
+
+
+def tender_notice_update(request, tender_notice_id):
+    tender_notice = TenderNotice.objects.get(id=tender_notice_id)
+    tender = TenderUpload.objects.get(title=tender_notice)
+    if request.method == "POST":
+        form = TenderNoticeForm(request.POST or None, instance=tender_notice)
+        if form.is_valid():
+            form.save()
+            return redirect('tender_notice_list', tender.id)
+
+    if request.method == "GET":
+        form = TenderNoticeForm(instance=tender_notice)
+        context = {
+            'form': form
+        }
+        return render(request, 'government_employee/TenderNotice/tender_notice_update.html', context=context)
