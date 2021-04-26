@@ -31,5 +31,6 @@ urlpatterns = [
     path('change/email/<code>/', ChangeEmailActivateView.as_view(), name='government_change_email_activation'),
 
     path('tender_notice_list/<int:tender_id>/', tender_notice_list, name='tender_notice_list'),
+    path('tender_notice_create/<int:tender_id>/', tender_notice_create, name='tender_notice_create'),
 
 ]

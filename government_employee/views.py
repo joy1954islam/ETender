@@ -291,9 +291,26 @@ class ChangePasswordView(BasePasswordChangeView):
 
 
 def tender_notice_list(request, tender_id):
-    tender_notice = TenderNotice.objects.filter(id=tender_id)
+    tender_notice = TenderNotice.objects.filter(tender=tender_id)
     context = {
         'tender_notice': tender_notice,
-        'tender_id': tender_id
+        'tender_id': tender_id,
     }
     return render(request, 'government_employee/TenderNotice/tender_notice_list.html', context=context)
+
+
+def tender_notice_create(request, tender_id):
+    tender = TenderUpload.objects.get(id=tender_id)
+    form = TenderNoticeForm()
+    if request.method == "POST":
+        form = TenderNoticeForm(request.POST or None)
+        if form.is_valid():
+            tn = form.save(commit=False)
+            tn.tender = tender
+            form.save()
+            return redirect('tender_notice_list', tender_id)
+    context = {
+        'form': form,
+        'tender': tender
+    }
+    return render(request, 'government_employee/TenderNotice/tender_notice_create.html', context=context)

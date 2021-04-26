@@ -1,0 +1,20 @@
+{% extends 'government_employee/government_employee.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<form method="POST" action="{% url 'tender_notice_create' tender.id %}">
+  {% csrf_token %}
+  <div class="modal-header">
+     <h4 class="modal-title">Create a new Tender Notice</h4>
+  </div>
+  <div class="modal-body">
+
+    {{ form|crispy }}
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Create Tender Notice</button>
+  </div>
+</form>
+{% endblock content %}
