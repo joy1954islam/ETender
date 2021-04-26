@@ -33,5 +33,6 @@ urlpatterns = [
     path('tender_notice_list/<int:tender_id>/', tender_notice_list, name='tender_notice_list'),
     path('tender_notice_create/<int:tender_id>/', tender_notice_create, name='tender_notice_create'),
     path('tender_notice_update/<int:tender_notice_id>/', tender_notice_update, name='tender_notice_update'),
+    path('tender_notice_delete/<int:tender_notice_id>/', tender_notice_delete, name='tender_notice_delete'),
 
 ]

@@ -331,3 +331,16 @@ def tender_notice_update(request, tender_notice_id):
             'form': form
         }
         return render(request, 'government_employee/TenderNotice/tender_notice_update.html', context=context)
+
+
+def tender_notice_delete(request, tender_notice_id):
+    tender_notice = TenderNotice.objects.get(id=tender_notice_id)
+    tender = TenderUpload.objects.get(title=tender_notice)
+    if request.method == "POST":
+        tender_notice.delete()
+        return redirect('tender_notice_list', tender.id)
+    if request.method == "GET":
+        context = {
+            'tender_notice': tender_notice
+        }
+        return render(request, 'government_employee/TenderNotice/tender_notice_delete.html', context=context)

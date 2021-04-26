@@ -42,7 +42,7 @@
                                             <a href="{% url 'tender_notice_update' tender_notice.id %}" class="btn btn-success"> Update </a>
                                         </td>
                                         <td >
-                                            <a href="#" class="btn btn-danger"> Delete </a>
+                                            <a href="{% url 'tender_notice_delete' tender_notice.id %}" class="btn btn-danger"> Delete </a>
                                         </td>
                                       </tr>
                                     {% empty %}
