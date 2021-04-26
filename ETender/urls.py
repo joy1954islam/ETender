@@ -36,6 +36,7 @@ urlpatterns = [
          name='user_winner_holder_list'),
 
     path('about/', holder.about, name='about'),
+    path('service/', holder.service, name='service'),
 
 ]
 if settings.DEBUG:

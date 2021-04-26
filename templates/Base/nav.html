@@ -3,7 +3,7 @@
     <ul>
           <li class="active"><a href="{% url 'index' %}">Home</a></li>
           <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="#services">Services</a></li>
+          <li><a href="{% url 'service' %}">Services</a></li>
 
           {% if request.user.is_authenticated and request.user.is_superuser %}
             <li><a href="{% url 'SuperAdminHome' %}">My Dashboard</a></li>
