@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from government_employee.models import TenderUpload
+from government_employee.models import TenderNotice
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from government_employee.models import ApplyTenderHolderShortList, WinnerHolder
@@ -111,3 +111,19 @@ def about(request):
 
 def service(request):
     return render(request, 'service.html')
+
+
+def all_tender_notice(request):
+    tender_notice = TenderNotice.objects.all().order_by('created_date')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(tender_notice, 10)
+    try:
+        tender_notice = paginator.page(page)
+    except PageNotAnInteger:
+        tender_notice = paginator.page(1)
+    except EmptyPage:
+        tender_notice = paginator.page(paginator.num_pages)
+    context = {
+        'tender_notice': tender_notice
+    }
+    return render(request, 'tender_notice.html', context=context)

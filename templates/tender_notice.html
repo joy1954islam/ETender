@@ -1,0 +1,68 @@
+{% extends 'Base/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<br>
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table class="table" id="datatable-buttons"  style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>S. No.</th>
+                                    <th>Tender Name</th>
+                                    <th>Tender Notice</th>
+                                    <th>Notice Create Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    {% for tender_notice in tender_notice %}
+                                      <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ tender_notice.tender}}</td>
+                                        <td>{{ tender_notice.notice }}</td>
+                                        <td>{{ tender_notice.created_date }}</td>
+
+                                      </tr>
+                                    {% empty %}
+                                      <tr>
+                                        <td colspan="8" class="text-center bg-warning">No Tender Notice Here</td>
+                                      </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if tender_notice.has_other_pages %}
+                            <nav aria-label="event-pagination" id="pagination">
+                                <ul class="pagination">
+                                    {% if tender_notice.has_previous %}
+                                        <li class="page-item"><a href="?page={{ tender_notice.previous_page_number }}" class="page-link">&laquo;</a></li>
+                                    {% else %}
+                                        <li class="page-item disabled" ><span class="page-link">&laquo;</span></li>
+                                    {% endif %}
+                                    {% for i in tender_notice.paginator.page_range %}
+                                        {% if tender_notice.number == i %}
+                                            <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                                        {% else %}
+                                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if tender_notice.has_next %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ tender_notice.next_page_number }}">&raquo;</a></li>
+                                    {% else %}
+                                        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
