@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import *
+from .utils import *
 import random
 from django.contrib.auth.models import User
 from django.contrib.auth.views import (
@@ -182,15 +183,9 @@ def winner_holder(request, tender_id):
         winner_holder.tender = winner_tender
         winner_holder.username = winner_username
         winner_holder.save()
-        to_email = winner.username.email
-        print(to_email)
-        # send_mail(
-        #     'You are Winner Tender',
-        #     'Here is the message.',
-        #     'settings.EMAIL_HOST_USER',
-        #     ['to_email'],
-        #     fail_silently=False,
-        # )
+        email = winner.username.email
+        print(email)
+        send_tender_winner_holder_email(winner_tender, winner_username, email)
         return redirect('winner_holder_list', tender_id)
 
 

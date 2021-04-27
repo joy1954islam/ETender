@@ -1,0 +1,10 @@
+{% load i18n %}
+
+Your username is:
+
+{{ winner_username }}
+
+
+Tender Name is  is:
+
+{{ winner_tender }}
