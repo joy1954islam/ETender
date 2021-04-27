@@ -38,6 +38,7 @@ urlpatterns = [
     path('about/', holder.about, name='about'),
     path('service/', holder.service, name='service'),
     path('all_tender_notice/', holder.all_tender_notice, name='all_tender_notice'),
+    path('tender_chart/', holder.tender_chart, name='tender_chart'),
 
 ]
 if settings.DEBUG:

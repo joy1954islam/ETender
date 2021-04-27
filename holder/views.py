@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from government_employee.models import ApplyTenderHolderShortList, WinnerHolder
 from .filters import *
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import JsonResponse
+from django.db.models import Count
+from SuperAdmin.models import Ministry
 
 
 def home_tender_list(request):
@@ -25,6 +28,21 @@ def home_tender_list(request):
         'MyFilter': MyFilter
     }
     return render(request, 'index.html', context=context)
+
+
+def tender_chart(request):
+    labels = []
+    data = []
+
+    queryset = TenderUpload.objects.values('ministry_name__ministry_name').annotate(tender_count=Count('ministry_name'))
+    for entry in queryset:
+        labels.append(entry['ministry_name__ministry_name'])
+        data.append(entry['tender_count'])
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
 
 
 def list_of_apply_tender(request):
@@ -127,3 +145,5 @@ def all_tender_notice(request):
         'tender_notice': tender_notice
     }
     return render(request, 'tender_notice.html', context=context)
+
+
