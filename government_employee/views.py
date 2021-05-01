@@ -93,11 +93,9 @@ def tender_upload_update(request, tender_id):
 def tender_upload_delete(request, tender_id):
     tender = TenderUpload.objects.get(id=tender_id)
     if request.method == "POST":
+        tender = TenderUpload.objects.get(id=tender_id)
         tender.delete()
-        context = {
-            'tender': tender
-        }
-        return render(request, 'government_employee/TenderUpload/tender_delete.html', context=context)
+        return redirect('tender_upload_list')
     if request.method == "GET":
         context = {
             'tender': tender
