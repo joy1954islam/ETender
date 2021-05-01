@@ -8,7 +8,7 @@ class ApplyTender(models.Model):
     tender = models.ForeignKey(TenderUpload, on_delete=models.CASCADE)
     number = models.CharField(max_length=15, null=True, blank=True, verbose_name='Your Phone Number')
     trx_id = models.CharField(max_length=35, null=True, blank=True, verbose_name='Tender Free Trx ID')
-    bank_trx_id = models.IntegerField(verbose_name='Security Money Trx ID')
+    bank_trx_id = models.CharField(max_length=135, verbose_name='Security Money Trx ID')
     proposal_pdf = models.FileField(verbose_name='Proposal PDF')
     working_exprience = models.TextField(verbose_name='Working Experience')
     Payment = (
