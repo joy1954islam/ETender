@@ -178,6 +178,28 @@ def list_of_holder_short_list(request, tender_id):
     return render(request, 'government_employee/ApplyTender/apply_tender_holder_short_list.html', context=context)
 
 
+def meanual_winner_holder(request, tender_id, user_id):
+    apply_tender = ApplyTender.objects.get(id=tender_id)
+    tender = TenderUpload.objects.get(title=apply_tender)
+    user = User.objects.get(id=user_id)
+    winner_list = WinnerHolder()
+    winner_list.tender = apply_tender
+    winner_list.username = user
+    exists_user = WinnerHolder.objects.filter(tender=apply_tender)
+    if exists_user.exists():
+        messages.add_message(request, messages.INFO, 'This User Is Already Winner Listed')
+        return redirect('winner_holder_list', tender_id)
+    else:
+        winner_list.save()
+        winner_username = user.username
+        print(winner_username)
+        email = user.email
+        print(email)
+        print(tender)
+        send_tender_winner_holder_email(tender, winner_username, email)
+        return redirect('winner_holder_list', tender_id)
+
+
 def winner_holder(request, tender_id):
     holder_short_list = ApplyTenderHolderShortList.objects.filter(tender=tender_id)
     w = WinnerHolder.objects.filter(tender=tender_id)

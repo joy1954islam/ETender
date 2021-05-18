@@ -35,4 +35,7 @@ urlpatterns = [
     path('tender_notice_update/<int:tender_notice_id>/', tender_notice_update, name='tender_notice_update'),
     path('tender_notice_delete/<int:tender_notice_id>/', tender_notice_delete, name='tender_notice_delete'),
 
+
+    path('meanual_winner_holder/<int:tender_id>/<int:user_id>/', meanual_winner_holder, name='meanual_winner_holder'),
+
 ]

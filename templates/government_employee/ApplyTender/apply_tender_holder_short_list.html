@@ -23,6 +23,7 @@
                                     <th>Holder Name</th>
                                     <th>Holder Phone Number</th>
                                     <th>Holder Email</th>
+                                    <th>Add To Tender Winner </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,6 +34,9 @@
                                             <td>{{ short_list.username }}</td>
                                             <td>{{ short_list.username.phone_number }}</td>
                                             <td>{{ short_list.username.email }}</td>
+                                            <td>
+                                                <a href="{% url 'meanual_winner_holder' short_list.tender.id short_list.username.id %}" class="btn btn-primary">Add To Tender Winner</a>
+                                            </td>
                                          </tr>
                                     {% empty %}
                                       <tr>
