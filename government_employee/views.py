@@ -32,7 +32,18 @@ User = get_user_model()
 
 
 def government_employee_home(request):
-    return render(request, 'government_employee/Home.html')
+    user = User.objects.all()
+    ministry = Ministry.objects.all().count()
+    ministry_incharge = user.filter(is_government_employee=True).count()
+    holder = user.filter(is_tender_holder=True).count()
+    tender = TenderUpload.objects.all().count()
+    context = {
+        'ministry': ministry,
+        'ministry_incharge': ministry_incharge,
+        'holder': holder,
+        'tender': tender
+    }
+    return render(request, 'government_employee/Home.html', context=context)
 
 
 def register_holder_list(request):
