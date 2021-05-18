@@ -33,10 +33,12 @@ def SuperAdminHome(request):
     ministry = Ministry.objects.all().count()
     ministry_incharge = user.filter(is_government_employee=True).count()
     holder = user.filter(is_tender_holder=True).count()
+    holder_user = User.objects.exclude(is_government_employee=True).exclude(is_superuser=True).exclude(is_tender_holder=True)
     context = {
         'ministry': ministry,
         'ministry_incharge': ministry_incharge,
         'holder': holder,
+        'holder_user': holder_user
     }
     return render(request, 'SuperAdmin/Home.html', context)
 

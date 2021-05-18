@@ -3,7 +3,7 @@
 {% load static %}
 {% block content %}
 
-    <div class="container">
+<div class="container" xmlns="http://www.w3.org/1999/html">
         <div class="row">
             <div class="col-lg-3 col-sm-6">
                 <div class="card-box bg-blue">
@@ -38,6 +38,20 @@
                 </div>
             </div>
         </div>
+
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-6">New Holder Registration</h1>
+            <p class="lead">
+                {% for holder_user in holder_user %}
+                <div class="alert alert-primary" role="alert">
+                     <strong> {{ holder_user.username }} </strong>is this new user. plz approved this user
+                </div>
+                {% endfor %}
+            </p>
+          </div>
+        </div>
+
     </div>
 
 {% endblock content %}
