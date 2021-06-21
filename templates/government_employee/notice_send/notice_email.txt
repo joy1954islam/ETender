@@ -3,8 +3,9 @@
 Your username is:
 
 {{ winner_username }}
+Tender id is :
+{{ winner_tender_id }}
 
-
-Tender Name is  is:
+Tender Name is:
 
 {{ winner_tender }}

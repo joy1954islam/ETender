@@ -11,38 +11,44 @@
             <h2>Button Example <small>Users</small></h2>
             <div class="clearfix"></div>
         </div>
+        <h2 style="text-align:center">Selected Tender Applicant</h2>
         <div class="x_content">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box table-responsive">
-                        <table class="table" id="datatable-buttons"  style="width:100%">
+                        <table class="table" id="datatable-buttons" style="width:100%">
                             <thead>
-                                <tr>
-                                    <th>S. NO.</th>
-                                    <th>Tender Name</th>
-                                    <th>Holder Name</th>
-                                    <th>Holder Phone Number</th>
-                                    <th>Holder Email</th>
-                                    <th>Add To Tender Winner </th>
-                                </tr>
+                            <tr>
+                                <th>S. NO.</th>
+                                <th>Tender Name</th>
+                                <th>Holder Name</th>
+                                <th>Proposed Amount</th>
+                                <th>Working experience</th>
+                                <th>Holder Phone Number</th>
+                                <th>Holder Email</th>
+                                <th>Add To Tender Winner</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                    {% for short_list in short_list %}
-                                         <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{ short_list.tender }}</td>
-                                            <td>{{ short_list.username }}</td>
-                                            <td>{{ short_list.username.phone_number }}</td>
-                                            <td>{{ short_list.username.email }}</td>
-                                            <td>
-                                                <a href="{% url 'meanual_winner_holder' short_list.tender.id short_list.username.id %}" class="btn btn-primary">Add To Tender Winner</a>
-                                            </td>
-                                         </tr>
-                                    {% empty %}
-                                      <tr>
-                                        <td colspan="8" class="text-center bg-warning">No short List Holder</td>
-                                      </tr>
-                                    {% endfor %}
+                            {% for short_list in short_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ short_list.tender }}</td>
+                                <td>{{ short_list.username }}</td>
+                                <td>{{ short_list.tender.proposed_amount }}</td>
+                                <td>{{ short_list.tender.working_experience }}</td>
+                                <td>{{ short_list.username.phone_number }}</td>
+                                <td>{{ short_list.username.email }}</td>
+                                <td>
+                                    <a href="{% url 'meanual_winner_holder' short_list.tender.id short_list.username.id %}"
+                                       class="btn btn-primary">Add To Tender Winner</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8" class="text-center bg-warning">No short List Holder</td>
+                            </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>

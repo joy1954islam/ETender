@@ -8,6 +8,8 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.db.models import Count
 from SuperAdmin.models import Ministry
+from accounts.decorators import *
+from django.contrib.auth.decorators import login_required
 
 
 def home_tender_list(request):
@@ -62,7 +64,8 @@ def list_of_apply_tender(request):
     return render(request, 'Holder/ApplyHolder/apply_tender_list.html', context=context)
 
 
-@login_required(login_url='log_in')
+@login_required
+@holder_required
 def apply_tender_create(request, tender_id):
     tender = TenderUpload.objects.get(id=tender_id)
     form = ApplyTenderForm()
@@ -77,7 +80,10 @@ def apply_tender_create(request, tender_id):
             tender_apply.trx_id = form.cleaned_data['trx_id']
             tender_apply.bank_trx_id = form.cleaned_data['bank_trx_id']
             tender_apply.proposal_pdf = form.cleaned_data['proposal_pdf']
-            tender_apply.working_exprience = form.cleaned_data['working_exprience']
+            tender_apply.working_experience = form.cleaned_data['working_experience']
+            tender_apply.proposed_amount = form.cleaned_data['proposed_amount']
+            tender_apply.payment_method = form.cleaned_data['payment_method']
+            tender_apply.bank_check_image = form.cleaned_data['bank_check_image']
             tender_apply.save()
         context = {
             'form': form
@@ -99,13 +105,18 @@ def holder_list_of_holder_short_list(request, tender_id):
 
 
 def holder_winner_holder_list(request, tender_id):
-    winner_holder = WinnerHolder.objects.filter(tender=tender_id)
+    # winner_holder = WinnerHolder.objects.filter(tender=tender_id)
+    tender = TenderUpload.objects.get(id=tender_id)
+    print('tender ==', tender.id)
+    winner_holder = WinnerHolder.objects.filter(tender__tender__id=tender_id)
     context = {
         'winner_holder': winner_holder
     }
     return render(request, 'Holder/ApplyHolder/winner_holder_list.html', context=context)
 
 
+@login_required
+@holder_required
 def user_winner_holder_list(request):
     winner_holder = WinnerHolder.objects.filter(username=request.user)
     page = request.GET.get('page', 1)
@@ -145,5 +156,3 @@ def all_tender_notice(request):
         'tender_notice': tender_notice
     }
     return render(request, 'tender_notice.html', context=context)
-
-

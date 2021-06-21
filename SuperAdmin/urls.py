@@ -4,7 +4,9 @@ from SuperAdmin import views
 
 urlpatterns = [
     path('home/', views.SuperAdminHome, name='SuperAdminHome'),
-    path('profile/',views.SuperAdminProfile, name='SuperAdminProfile'),
+    path('profile/', views.SuperAdminProfile, name='SuperAdminProfile'),
+    path('notification/', views.notification, name='notification'),
+
     path('GovtSignUpView/',views.GovtSignUpView.as_view(), name='GovtSignUpView'),
 
     path('ministry/', views.ministry_list, name='ministry_list'),

@@ -5,9 +5,10 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
-def send_tender_winner_holder_email(winner_tender, winner_username, email):
+def send_tender_winner_holder_email(winner_tender_id, winner_tender, winner_username, email):
     context = {
         'subject': _('You Are Tender Winner'),
+        'winner_tender_id': winner_tender_id,
         'winner_tender': winner_tender,
         'winner_username': winner_username,
     }

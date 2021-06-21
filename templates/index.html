@@ -1,85 +1,91 @@
 {% extends 'Base/base.html' %}
 {% load widget_tweaks %}
 {% block content %}
-    <br>
-    <h1>Tender List</h1>
+<br>
+<h1>Tender List</h1>
 <form method="get">
-   {{ MyFilter.form }}
-   <button class="btn btn-primary" type="submit">Search</button>
- </form>
-    <table class="table">
-          <thead class="thead-light">
-                <tr>
-                  <th scope="col">S. No.</th>
-                  <th scope="col">Tender Name </th>
-                  <th scope="col">Username</th>
-                  <th scope="col">Ministry Name</th>
-                  <th scope="col">Publish Date</th>
-                  <th scope="col">End Date</th>
-                  <th scope="col">Extra Details In Pdf</th>
-                  <th scope="col"> Details </th>
-                  <th scope="col"> Apply Tender </th>
-                  <th scope="col"> Selected Tender Holder </th>
-                  <th scope="col"> Winner Holder </th>
-                </tr>
-          </thead>
-          <tbody>
-          {% for tender in tender %}
-               <tr>
-                  <th scope="row">{{ forloop.counter }}</th>
-                  <td>{{ tender.title }}</td>
-                  <td>{{ tender.username }}</td>
-                  <td>{{ tender.ministry_name }}</td>
-                  <td>{{ tender.publish_date}}</td>
-                  <td>{{ tender.end_date}}</td>
-                  <td><a href="{{ tender.pdf.url }}" target="_blank">{{ tender.pdf }}</a></td>
-                  <td><a href="{% url 'tender_upload_details' tender.id %}" class="btn btn-primary">Details</a></td>
-                   <td>
-                      <a href="{% url 'apply_tender_create' tender.id %}" class="btn btn-secondary"> Apply Tender</a>
-                   </td>
+    {{ MyFilter.form }}
+    <button class="btn btn-primary btn-sm" type="submit">Search</button>
+</form>
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">S. No.</th>
+        <th scope="col">Tender ID</th>
+        <th scope="col">Tender Name</th>
+        <!--                  <th scope="col">Username</th>-->
+        <th scope="col">Ministry Name</th>
+        <th scope="col">Publish Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Extra Details In Pdf</th>
+        <th scope="col"> Details</th>
+        <th scope="col"> Apply Tender</th>
+        <th scope="col"> Selected Tender Holder</th>
+        <th scope="col"> Winner Holder</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for tender in tender %}
+    <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ tender.tender_id }}</td>
+        <td>{{ tender.title }}</td>
+        <!--                  <td>{{ tender.username }}</td>-->
+        <td>{{ tender.ministry_name }}</td>
+        <td>{{ tender.publish_date}}</td>
+        <td>{{ tender.end_date}}</td>
+        <td><a href="{{ tender.pdf.url }}" target="_blank">{{ tender.pdf }}</a></td>
+        <td><a href="{% url 'tender_upload_details' tender.id %}" class="btn btn-primary btn-sm btn-block"
+               style="height:70px;width:100px"> Details</a></td>
+        <td>
+            <a href="{% url 'apply_tender_create' tender.id %}" class="btn btn-secondary btn-sm btn-block"
+               style="height:70px;width:100px"> Apply Tender</a>
+        </td>
 
-                  <td><a href="{% url 'holder_list_of_holder_short_list' tender.id %}" class="btn btn-info">Selected Tender Holder</a></td>
-                  <td><a href="{% url 'holder_winner_holder_list' tender.id %}" class="btn btn-success">Tender Winner</a></td>
-               </tr>
-          {% empty %}
-                <tr>
-                  <td colspan="5">No Tender </td>
-                </tr>
-          {% endfor %}
-          </tbody>
-    </table>
-    {% if tender.has_other_pages %}
-            <nav aria-label="event-pagination" id="pagination">
-                <ul class="pagination">
-                    {% if tender.has_previous %}
-                        <li class="page-item"><a href="?page={{ tender.previous_page_number }}" class="page-link">&laquo;</a></li>
-                    {% else %}
-                        <li class="page-item disabled" ><span class="page-link">&laquo;</span></li>
-                    {% endif %}
-                    {% for i in tender.paginator.page_range %}
-                        {% if tender.number == i %}
-                            <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
-                        {% else %}
-                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                        {% endif %}
-                    {% endfor %}
-                    {% if tender.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ tender.next_page_number }}">&raquo;</a></li>
-                    {% else %}
-                        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
-                    {% endif %}
-                </ul>
-            </nav>
-    {% endif %}
+        <td><a href="{% url 'holder_list_of_holder_short_list' tender.id %}" class="btn btn-info btn-sm btn-block"
+               style="height:70px;width:100px">Selected Tender Applicants</a></td>
+        <td><a href="{% url 'holder_winner_holder_list' tender.id %}" class="btn btn-success btn-sm btn-block"
+               style="height:70px;width:100px">Tender Winner</a></td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No Tender</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% if tender.has_other_pages %}
+<nav aria-label="event-pagination" id="pagination">
+    <ul class="pagination">
+        {% if tender.has_previous %}
+        <li class="page-item"><a href="?page={{ tender.previous_page_number }}" class="page-link">&laquo;</a></li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+        {% endif %}
+        {% for i in tender.paginator.page_range %}
+        {% if tender.number == i %}
+        <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if tender.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ tender.next_page_number }}">&raquo;</a></li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
 <div>
 
-  <div id="container" style="width: 75%;">
-    <canvas id="tender_chart" data-url="{% url 'tender_chart' %}"></canvas>
-  </div>
+    <div id="container" style="width: 75%;">
+        <canvas id="tender_chart" data-url="{% url 'tender_chart' %}"></canvas>
+    </div>
 
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-  <script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
 
     $(function () {
 
@@ -88,7 +94,8 @@
         url: $tenderChart.data("url"),
         success: function (data) {
 
-          var ctx = $tenderChart[0].getContext("2d");
+<!--        var ctx = $tenderChart[0].getContext("2d");  -->
+        var ctx = document.getElementById("tender_chart").getContext("2d");
 
           new Chart(ctx, {
             type: 'bar',
@@ -102,9 +109,13 @@
             },
             options: {
               responsive: true,
-              legend: {
-                position: 'top',
-              },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
               title: {
                 display: true,
                 text: 'Total Tender Bar Chart'
@@ -117,7 +128,8 @@
 
     });
 
-  </script>
+
+    </script>
 </div>
 
 {% endblock content %}

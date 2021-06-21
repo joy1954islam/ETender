@@ -5,14 +5,14 @@
 {% block content %}
 <br>
 
-  <p>
+<p>
 
-      <a href="{% url 'tender_upload_create' %}" type="button" style="float:right;" class="btn btn-primary">
-          <span class="glyphicon glyphicon-plus"></span>
-      Create a Tender
-      </a>
+    <a href="{% url 'tender_upload_create' %}" type="button" style="float:right;" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus"></span>
+        Create a Tender
+    </a>
 
-  </p>
+</p>
 <div class="col-md-12 col-sm-12 ">
     <div class="x_panel">
         <div class="x_title">
@@ -23,60 +23,76 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box table-responsive">
-                        <table class="table" id="datatable-buttons"  style="width:100%">
+                        <table class="table" id="datatable-buttons" style="width:100%">
                             <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Tender Title</th>
-                                    <th>Ministry Name</th>
-                                    <th>Publish Date</th>
-                                    <th>End Date</th>
-                                    <th>Pdf</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
-                                    <th>Tender Applicant</th>
-                                    <th>Selected Tender Holder</th>
-                                    <th>Add Tender Winner </th>
-                                    <th>Tender Winner</th>
-                                    <th>List of Tender Notice</th>
-                                </tr>
+                            <tr>
+                                <th>S. NO.</th>
+                                <th>Tender ID</th>
+                                <th>Tender Title</th>
+                                <th>Ministry Name</th>
+                                <th>Publish Date</th>
+                                <th>End Date</th>
+                                <th>Pdf</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                                <th>Tender Applicant</th>
+                                <th>Selected Tender Holder</th>
+                                <th>Add Tender Winner</th>
+                                <th>Tender Winner</th>
+                                <th>List of Tender Notice</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                    {% for tender in tender %}
-                                      <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ tender.title}}</td>
-                                        <td>{{ tender.ministry_name }}</td>
-                                        <td>{{ tender.publish_date }}</td>
-                                        <td>{{ tender.end_date }}</td>
-                                          <td><a target="_blank" href="{{ tender.pdf.url }}">{{ tender.pdf }}</a></td>
-                                        <td>
-                                            <a href="{% url 'tender_upload_update' tender.id %}" class="btn btn-success"> Update </a>
-                                        </td>
-                                        <td >
-                                            <a href="{% url 'tender_upload_delete' tender.id %}" class="btn btn-danger"> Delete </a>
-                                        </td>
-                                        <td>
-                                            <a href="{% url 'list_of_apply_tender' tender.id %}" class="btn btn-primary"> List of Tender Applicant </a>
-                                        </td>
-                                       <td>
-                                            <a href="{% url 'list_of_holder_short_list' tender.id %}" class="btn btn-info"> Selected Tender Holder </a>
-                                       </td>
-                                       <td>
-                                            <a href="{% url 'winner_holder' tender.id %}" class="btn btn-danger">Random Add Tender Winner </a>
-                                       </td>
-                                       <td>
-                                            <a href="{% url 'winner_holder_list' tender.id %}" class="btn btn-primary">List Of Tender Winner </a>
-                                       </td>
-                                       <td>
-                                            <a href="{% url 'tender_notice_list' tender.id %}" class="btn btn-secondary">List Of Tender Notice </a>
-                                       </td>
-                                      </tr>
-                                    {% empty %}
-                                      <tr>
-                                        <td colspan="8" class="text-center bg-warning">No Tender</td>
-                                      </tr>
-                                    {% endfor %}
+                            {% for tender in tender %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ tender.tender_id}}</td>
+                                <td>{{ tender.title}}</td>
+                                <td>{{ tender.ministry_name }}</td>
+                                <td>{{ tender.publish_date }}</td>
+                                <td>{{ tender.end_date }}</td>
+                                <td><a target="_blank" href="{{ tender.pdf.url }}">{{ tender.pdf }}</a></td>
+                                <td>
+                                    <a href="{% url 'tender_upload_update' tender.id %}" class="btn btn-success"
+                                       style="height:55px;width:90px"><i class="fa fa-pencil-square-o"
+                                                                         aria-hidden="true">
+                                        Update </i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'tender_upload_delete' tender.id %}" class="btn btn-danger"
+                                       style="height:55px;width:90px"> <i class="fa fa-trash" aria-hidden="true">
+                                        Delete </i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'list_of_apply_tender' tender.id %}" class="btn btn-primary"
+                                       style="height:55px;width:90px;"><i class="fa fa-users" aria-hidden="true">
+                                        Tender Applicants </i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'list_of_holder_short_list' tender.id %}" class="btn btn-info"
+                                       style="height:55px;width:90px"><i class="fa fa-users" aria-hidden="true">
+                                        Selected Applicants </i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'winner_holder' tender.id %}" class="btn btn-danger"
+                                       style="height:55px;width:90px"><i class="fa fa-trophy" aria-hidden="true"> Random
+                                        Winner </i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'winner_holder_list' tender.id %}" class="btn btn-primary"
+                                       style="height:55px;width:90px"> <i class="fa fa-trophy" aria-hidden="true">
+                                        Tender Winner </i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'tender_notice_list' tender.id %}" class="btn btn-secondary"
+                                       style="height:55px;width:90px">Tender Notice </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8" class="text-center bg-warning">No Tender</td>
+                            </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>

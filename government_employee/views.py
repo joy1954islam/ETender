@@ -7,7 +7,7 @@ from django.contrib.auth.views import (
     LogoutView as BaseLogoutView, PasswordChangeView as BasePasswordChangeView,
 )
 from django.core.mail import send_mail
-
+from django.utils.decorators import method_decorator
 from django.contrib.auth import login
 from accounts.models import Activation
 from django.utils.crypto import get_random_string
@@ -23,14 +23,17 @@ from accounts.forms import (
 )
 from django.contrib import messages
 from holder.models import ApplyTender
+from accounts.decorators import *
 from .forms import *
 from django.contrib.auth import get_user_model
-
+from django.contrib.auth.decorators import login_required
 from accounts.forms import UserUpdateForm
 
 User = get_user_model()
 
 
+@login_required
+@ministry_incharge_required
 def government_employee_home(request):
     user = User.objects.all()
     ministry = Ministry.objects.all().count()
@@ -46,6 +49,8 @@ def government_employee_home(request):
     return render(request, 'government_employee/Home.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def register_holder_list(request):
     holder = Holder.objects.all()
     context = {
@@ -54,6 +59,8 @@ def register_holder_list(request):
     return render(request, '', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def tender_upload_list(request):
     tender = TenderUpload.objects.filter(username=request.user)
     context = {
@@ -62,12 +69,15 @@ def tender_upload_list(request):
     return render(request, 'government_employee/TenderUpload/tender_list.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def tender_upload_create(request):
     if request.method == "POST":
         form = TenderUploadForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             t = form.save(commit=False)
             t.username = request.user
+            t.ministry_name = request.user.ministry_name
             t.save()
             return redirect(reverse('tender_upload_list'))
         context = {
@@ -82,6 +92,8 @@ def tender_upload_create(request):
         return render(request, 'government_employee/TenderUpload/tender_create.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def tender_upload_update(request, tender_id):
     tender = TenderUpload.objects.get(id=tender_id)
     if request.method == "POST":
@@ -101,6 +113,8 @@ def tender_upload_update(request, tender_id):
         return render(request, 'government_employee/TenderUpload/tender_upload.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def tender_upload_delete(request, tender_id):
     tender = TenderUpload.objects.get(id=tender_id)
     if request.method == "POST":
@@ -114,6 +128,8 @@ def tender_upload_delete(request, tender_id):
         return render(request, 'government_employee/TenderUpload/tender_delete.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def tender_upload_details(request, tender_id):
     tender = TenderUpload.objects.get(id=tender_id)
     context = {
@@ -122,6 +138,8 @@ def tender_upload_details(request, tender_id):
     return render(request, 'government_employee/TenderUpload/tender_details.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def list_of_apply_tender(request, tender_id):
     apply_tender = ApplyTender.objects.filter(tender=tender_id)
     context = {
@@ -130,6 +148,8 @@ def list_of_apply_tender(request, tender_id):
     return render(request, 'government_employee/ApplyTender/apply_tender_list.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def apply_tender_holder_details(request, tender_id):
     apply_tender = ApplyTender.objects.get(id=tender_id)
     context = {
@@ -138,6 +158,8 @@ def apply_tender_holder_details(request, tender_id):
     return render(request, 'government_employee/ApplyTender/apply_tender_details.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def change_status_of_apply_tender_holder(request, tender_id):
     apply_tender = ApplyTender.objects.get(id=tender_id)
     tender = TenderUpload.objects.get(title=apply_tender)
@@ -154,61 +176,83 @@ def change_status_of_apply_tender_holder(request, tender_id):
         return render(request, 'government_employee/ApplyTender/apply_tender_status_change.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def short_list_of_apply_tender_holder(request, tender_id, user_id):
-    apply_tender = ApplyTender.objects.get(id=tender_id)
-    tender = TenderUpload.objects.get(title=apply_tender)
+    tender = TenderUpload.objects.get(id=tender_id)
     user = User.objects.get(id=user_id)
+    apply_tender = ApplyTender.objects.get(tender__title=tender, username=user)
+
     short_list = ApplyTenderHolderShortList()
     short_list.tender = apply_tender
     short_list.username = user
     exists_user = ApplyTenderHolderShortList.objects.filter(tender=apply_tender, username=user)
+    print("exists_user=", exists_user)
     if exists_user.exists():
         messages.add_message(request, messages.INFO, 'This User Is Already Short Listed')
-        return redirect('list_of_apply_tender', tender.id)
+        return redirect('list_of_apply_tender', tender_id)
     else:
         short_list.save()
-        return redirect('list_of_apply_tender', tender.id)
+        return redirect('list_of_apply_tender', tender_id)
 
 
+@login_required
+@ministry_incharge_required
 def list_of_holder_short_list(request, tender_id):
-    short_list = ApplyTenderHolderShortList.objects.filter(tender_id=tender_id)
+
+    short_list = ApplyTenderHolderShortList.objects.filter(tender__tender__id=tender_id)
+    print('short list', short_list)
     context = {
         'short_list': short_list
     }
     return render(request, 'government_employee/ApplyTender/apply_tender_holder_short_list.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def meanual_winner_holder(request, tender_id, user_id):
     apply_tender = ApplyTender.objects.get(id=tender_id)
     tender = TenderUpload.objects.get(title=apply_tender)
     user = User.objects.get(id=user_id)
+
     winner_list = WinnerHolder()
     winner_list.tender = apply_tender
     winner_list.username = user
-    exists_user = WinnerHolder.objects.filter(tender=apply_tender)
+    exists_user = WinnerHolder.objects.filter(tender__tender__title=tender)
+    print('exists user =', exists_user)
     if exists_user.exists():
-        messages.add_message(request, messages.INFO, 'This User Is Already Winner Listed')
-        return redirect('winner_holder_list', tender_id)
+        messages.add_message(request, messages.INFO, 'This Tender Is Already Winner User List')
+        return redirect('winner_holder_list', tender.id)
     else:
         winner_list.save()
+        winner_tender_id = tender.tender_id
+        print('winner tender id= ', winner_tender_id)
         winner_username = user.username
         print(winner_username)
         email = user.email
         print(email)
         print(tender)
-        send_tender_winner_holder_email(tender, winner_username, email)
-        return redirect('winner_holder_list', tender_id)
+        send_tender_winner_holder_email(winner_tender_id, tender, winner_username, email)
+        return redirect('winner_holder_list', tender.id)
 
 
+@login_required
+@ministry_incharge_required
 def winner_holder(request, tender_id):
-    holder_short_list = ApplyTenderHolderShortList.objects.filter(tender=tender_id)
-    w = WinnerHolder.objects.filter(tender=tender_id)
+    tender = TenderUpload.objects.get(id=tender_id)
+    print('tender==', tender)
+    holder_short_list = ApplyTenderHolderShortList.objects.filter(tender__tender=tender)
+    print('holder short list = ', holder_short_list)
+    w = WinnerHolder.objects.filter(tender__tender=tender)
+    print('winner == ', w)
     if w.exists():
-        messages.add_message(request, messages.INFO, 'This Tender Is Already Winner Listed')
+        messages.add_message(request, messages.INFO, 'This Tender Is Already Winner User List')
         return redirect('winner_holder_list', tender_id)
     else:
         winner = random.choice(holder_short_list)
         winner_tender = winner.tender
+        winner_tender_id = winner.tender.tender.tender_id
+        print('winner = ', winner_tender_id)
         winner_username = winner.username
         winner_holder = WinnerHolder()
         winner_holder.tender = winner_tender
@@ -216,18 +260,24 @@ def winner_holder(request, tender_id):
         winner_holder.save()
         email = winner.username.email
         print(email)
-        send_tender_winner_holder_email(winner_tender, winner_username, email)
+        send_tender_winner_holder_email(winner_tender_id, winner_tender, winner_username, email)
         return redirect('winner_holder_list', tender_id)
 
 
+@login_required
+@ministry_incharge_required
 def winner_holder_list(request, tender_id):
-    winner_holder = WinnerHolder.objects.filter(tender=tender_id)
+    tender = TenderUpload.objects.get(id=tender_id)
+    print('tender ==', tender.id)
+    winner_holder = WinnerHolder.objects.filter(tender__tender__id=tender_id)
     context = {
         'winner_holder': winner_holder
     }
     return render(request, 'government_employee/ApplyTender/wiiner_holder_list.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def government_employee__profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST or None, request.FILES or None, instance=request.user)
@@ -244,6 +294,7 @@ def government_employee__profile(request):
     return render(request, 'government_employee/profile/GovernmentEmployeeProfile.html', context)
 
 
+@method_decorator([login_required, ministry_incharge_required], name='dispatch')
 class ChangeEmailView(LoginRequiredMixin, FormView):
     template_name = 'government_employee/profile/change_email.html'
     form_class = ChangeEmailForm
@@ -283,6 +334,7 @@ class ChangeEmailView(LoginRequiredMixin, FormView):
         return redirect('government_change_email')
 
 
+@method_decorator([login_required, ministry_incharge_required], name='dispatch')
 class ChangeEmailActivateView(View):
     @staticmethod
     def get(request, code):
@@ -301,6 +353,7 @@ class ChangeEmailActivateView(View):
         return redirect('government_change_email')
 
 
+@method_decorator([login_required, ministry_incharge_required], name='dispatch')
 class ChangePasswordView(BasePasswordChangeView):
     template_name = 'government_employee/profile/change_password.html'
 
@@ -316,6 +369,8 @@ class ChangePasswordView(BasePasswordChangeView):
         return redirect('government_change_password')
 
 
+@login_required
+@ministry_incharge_required
 def tender_notice_list(request, tender_id):
     tender_notice = TenderNotice.objects.filter(tender=tender_id)
     context = {
@@ -325,6 +380,8 @@ def tender_notice_list(request, tender_id):
     return render(request, 'government_employee/TenderNotice/tender_notice_list.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def tender_notice_create(request, tender_id):
     tender = TenderUpload.objects.get(id=tender_id)
     form = TenderNoticeForm()
@@ -342,6 +399,8 @@ def tender_notice_create(request, tender_id):
     return render(request, 'government_employee/TenderNotice/tender_notice_create.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def tender_notice_update(request, tender_notice_id):
     tender_notice = TenderNotice.objects.get(id=tender_notice_id)
     tender = TenderUpload.objects.get(title=tender_notice)
@@ -359,6 +418,8 @@ def tender_notice_update(request, tender_notice_id):
         return render(request, 'government_employee/TenderNotice/tender_notice_update.html', context=context)
 
 
+@login_required
+@ministry_incharge_required
 def tender_notice_delete(request, tender_notice_id):
     tender_notice = TenderNotice.objects.get(id=tender_notice_id)
     tender = TenderUpload.objects.get(title=tender_notice)

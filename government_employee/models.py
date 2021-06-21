@@ -15,6 +15,7 @@ class Holder(models.Model):
 class TenderUpload(models.Model):
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     ministry_name = models.ForeignKey(Ministry, on_delete=models.CASCADE)
+    tender_id = models.CharField(max_length=25, null=True, blank=True, verbose_name='Tender ID')
     title = models.CharField(max_length=150, verbose_name='Tender Title')
     publish_date = models.DateField(verbose_name='Tender Publish Date')
     end_date = models.DateField(verbose_name='Tender Publish Date End')
@@ -43,7 +44,7 @@ class ApplyTenderHolderShortList(models.Model):
 
 
 class WinnerHolder(models.Model):
-    username = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     tender = models.OneToOneField('holder.ApplyTender', on_delete=models.CASCADE)
 
     def __str__(self):

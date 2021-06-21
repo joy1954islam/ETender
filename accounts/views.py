@@ -47,7 +47,7 @@ def home(request):
         elif request.user.is_tender_holder:
             return redirect('index')
 
-    return HttpResponse("login failed")
+    return redirect('index')
 
 
 class ChangeLanguageView(TemplateView):

@@ -7,87 +7,104 @@
 <button type="button" class="btn btn-primary btn-lg btn-block">Tender User Details</button>
 <br>
 <table class="table table-bordered">
-  <thead>
+    <thead>
     <tr>
-         <th scope="col">User Name</th>
-         <td>{{ apply_tender.username }}</td>
+        <th scope="col">User Name</th>
+        <td>{{ apply_tender.username }}</td>
     </tr>
     <tr>
-         <th scope="col">Email</th>
-         <td>{{ apply_tender.username.email }}</td>
+        <th scope="col">Email</th>
+        <td>{{ apply_tender.username.email }}</td>
     </tr>
     <tr>
-         <th scope="col">First Name</th>
-         <td>{{ apply_tender.username.first_name }}</td>
+        <th scope="col">First Name</th>
+        <td>{{ apply_tender.username.first_name }}</td>
     </tr>
     <tr>
-         <th scope="col">Last Name</th>
-         <td>{{ apply_tender.username.last_name }}</td>
+        <th scope="col">Last Name</th>
+        <td>{{ apply_tender.username.last_name }}</td>
     </tr>
     <tr>
-         <th scope="col">Address</th>
-         <td>{{ apply_tender.username.address }}</td>
+        <th scope="col">Address</th>
+        <td>{{ apply_tender.username.address }}</td>
     </tr>
     <tr>
-         <th scope="col">Phone Number</th>
-         <td>{{ apply_tender.username.phone_number }}</td>
+        <th scope="col">Phone Number</th>
+        <td>{{ apply_tender.username.phone_number }}</td>
     </tr>
     <tr>
-         <th scope="col">Licence Number</th>
-         <td>{{ apply_tender.username.holder.lisence_number }}</td>
+        <th scope="col">Licence Number</th>
+        <td>{{ apply_tender.username.holder.lisence_number }}</td>
     </tr>
 
     <tr>
-         <th scope="col">Image</th>
-         <td>
-             <img src="{{ tender.username.image.url }}" height="80px;" width="80px;">
-         </td>
+        <th scope="col">Image</th>
+        <td>
+            <img src="{{ tender.username.image.url }}" height="80px;" width="80px;">
+        </td>
     </tr>
-  </thead>
+    </thead>
 </table>
 <button type="button" class="btn btn-info btn-lg btn-block">Apply Tender Details</button>
 <br>
 <table class="table table-bordered">
-  <thead>
+    <thead>
     <tr>
-         <th scope="col">User Name</th>
-         <td>{{ apply_tender.username }}</td>
+        <th scope="col">User Name</th>
+        <td>{{ apply_tender.username }}</td>
     </tr>
     <tr>
-         <th scope="col">Tender Name</th>
-         <td>{{ apply_tender.tender }}</td>
+        <th scope="col">Tender Name</th>
+        <td>{{ apply_tender.tender }}</td>
     </tr>
     <tr>
-         <th scope="col">Payment Phone Number</th>
-         <td>{{ apply_tender.number }}</td>
+        <th scope="col">Payment Method</th>
+        <td>{{ apply_tender.payment_method }}</td>
     </tr>
     <tr>
-         <th scope="col">Trx Id</th>
-         <td>{{ apply_tender.trx_id }}</td>
+        <th scope="col">Payment Phone Number</th>
+        <td>{{ apply_tender.number }}</td>
     </tr>
     <tr>
-         <th scope="col">Bank Trx ID</th>
-         <td>{{ apply_tender.bank_trx_id }}</td>
+        <th scope="col">Trans ID</th>
+        <td>{{ apply_tender.trx_id }}</td>
     </tr>
     <tr>
-         <th scope="col">Proposal PDF</th>
-         <td>
-             <a target="_blank" href="{{ apply_tender.proposal_pdf.url }}">{{ apply_tender.proposal_pdf }}</a>
-         </td>
+        <th scope="col">Bank Name & Bank Check Number</th>
+        <td>{{ apply_tender.bank_trx_id }}</td>
     </tr>
     <tr>
-         <th scope="col">Working Experience</th>
-         <td>{{ apply_tender.working_exprience }}</td>
+        <th scope="col">Bank Check Image</th>
+        <td>
+            {% if apply_tender.bank_check_image %}
+            <img src="{{ apply_tender.bank_check_image.url }}" height="100px;" width="100px;">
+            {% else%}
+            {%endif%}
+        </td>
     </tr>
     <tr>
-         <th scope="col">Payment Status</th>
-         <td>{{ apply_tender.payment_status }}</td>
+        <th scope="col">Proposal PDF</th>
+        <td>
+            <a target="_blank" href="{{ apply_tender.proposal_pdf.url }}">{{ apply_tender.proposal_pdf }}</a>
+        </td>
     </tr>
     <tr>
-         <th scope="col">Approved Status</th>
-         <td>{{ apply_tender.is_apply }}</td>
+        <th scope="col">Working Experience</th>
+        <td>{{ apply_tender.working_experience }}</td>
     </tr>
-  </thead>
+    <tr>
+        <th scope="col">Proposed Amount</th>
+        <td>{{ apply_tender.proposed_amount }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Payment Status</th>
+        <td>{{ apply_tender.payment_status }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Approved Status</th>
+        <td>{{ apply_tender.is_apply }}</td>
+    </tr>
+    </thead>
 </table>
 
 {% endblock content %}

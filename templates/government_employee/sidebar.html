@@ -1,27 +1,27 @@
-            <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
-                <h3>General</h3>
-                <ul class="nav side-menu">
-                  <li>
-                    <a href="{% url 'government_employee_home' %}"><i class="fa fa-home"></i> Home </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'tender_upload_list' %}"><i class="fa fa-edit"></i> Tender </a>
-                  </li>
-                  <li>
-                    <a> <i class="fa fa-desktop"></i>Profile</a>
-                    <ul class="nav child_menu">
-                      <li><a href="{% url 'government_change_profile' %}">Profile</a></li>
-                      <li><a href="{% url 'government_change_email' %}">Change Email</a></li>
-                      <li><a href="{% url 'government_change_password' %}">Change Password</a></li>
+<!-- sidebar menu -->
+<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+    <div class="menu_section">
+        <h3>General</h3>
+        <ul class="nav side-menu">
+            <li>
+                <a href="{% url 'government_employee_home' %}"><i class="fa fa-home"></i> Home </a>
+            </li>
+            <li>
+                <a href="{% url 'tender_upload_list' %}"><i class="fa fa-edit"></i> Tender </a>
+            </li>
+            <li>
+                <a> <i class="fa fa-user"></i>Profile</a>
+                <ul class="nav child_menu">
+                    <li><a href="{% url 'government_change_profile' %}">Profile</a></li>
+                    <li><a href="{% url 'government_change_email' %}">Change Email</a></li>
+                    <li><a href="{% url 'government_change_password' %}">Change Password</a></li>
 
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="{% url 'log_out' %}"><i class="fa fa-sign-out"></i> Log Out </a>
-                  </li>
                 </ul>
-              </div>
-            </div>
-            <!-- /sidebar menu -->
+            </li>
+            <li>
+                <a href="{% url 'log_out' %}"><i class="fa fa-sign-out"></i> Log Out </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- /sidebar menu -->

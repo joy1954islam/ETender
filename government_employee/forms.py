@@ -4,13 +4,13 @@ from holder.models import ApplyTender
 
 
 class TenderUploadForm(forms.ModelForm):
-
+    tender_id = forms.CharField(required=True, label='Tender ID')
     publish_date = forms.DateField(widget=forms.widgets.DateInput(attrs={"type": "date"}))
     end_date = forms.DateField(widget=forms.widgets.DateInput(attrs={"type": "date"}))
 
     class Meta:
         model = TenderUpload
-        fields = ['title', 'ministry_name', 'publish_date', 'end_date', 'pdf']
+        fields = ['tender_id', 'title', 'publish_date', 'end_date', 'pdf']
 
 
 class ApplyTenderHolderUpdateForm(forms.ModelForm):

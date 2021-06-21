@@ -15,44 +15,55 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box table-responsive">
-                        <table class="table" id="datatable-buttons"  style="width:100%">
+                        <table class="table" id="datatable-buttons" style="width:100%">
                             <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Tender Title</th>
-                                    <th>Holder Name</th>
-                                    <th>Payment Number</th>
-                                    <th>Payment Status</th>
-                                    <th>Approve Status</th>
-                                    <th>details</th>
-                                    <th>Change Payment Status</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th>Id</th>
+                                <th>Tender Title</th>
+                                <th>Holder Name</th>
+                                <th>Payment Number</th>
+                                <th>Payment Status</th>
+                                <th>Proposed Amount</th>
+                                <th>working experience</th>
+                                <th>Approve Status</th>
+                                <th>details</th>
+                                <th>Change Payment Status</th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
-                                    {% for apply_tender in apply_tender %}
-                                      <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ apply_tender.tender.title}}</td>
-                                        <td>{{ apply_tender.username }}</td>
-                                        <td>{{ apply_tender.number }}</td>
-                                        <td>{{ apply_tender.payment_status }}</td>
-                                        <td>{{ apply_tender.is_apply }}</td>
-                                        <td>
-                                            <a href="{% url 'apply_tender_holder_details' apply_tender.id %}" class="btn btn-info">Details</a>
-                                        </td>
-                                        <td>
-                                            <a href="{% url 'change_status_of_apply_tender_holder' apply_tender.id %}" class="btn btn-primary">Change Payment Status</a>
-                                        </td>
-                                        <td>
-                                            <a href="{% url 'short_list_of_apply_tender_holder' apply_tender.tender.id apply_tender.username.id %}" class="btn btn-success">Add to Select Applicant</a>
-                                        </td>
-                                      </tr>
-                                    {% empty %}
-                                      <tr>
-                                        <td colspan="8" class="text-center bg-warning">No Apply Tender Tender</td>
-                                      </tr>
-                                    {% endfor %}
+                            {% for apply_tender in apply_tender %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ apply_tender.tender.title}}</td>
+                                <td>{{ apply_tender.username }}</td>
+                                <td>{{ apply_tender.number }}</td>
+
+                                <td>{{ apply_tender.payment_status }}</td>
+                                <td>{{ apply_tender.proposed_amount }}</td>
+                                <td>{{ apply_tender.working_experience }}</td>
+                                <td>{{ apply_tender.is_apply }}</td>
+                                <td>
+                                    <a href="{% url 'apply_tender_holder_details' apply_tender.id %}"
+                                       class="btn btn-info"><i class="fa fa-info-circle" aria-hidden="true">
+                                        Details</i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'change_status_of_apply_tender_holder' apply_tender.id %}"
+                                       class="btn btn-primary"><i class="fa fa-money" aria-hidden="true">
+                                        Change Payment Status</i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'short_list_of_apply_tender_holder' apply_tender.tender.id apply_tender.username.id %}"
+                                       class="btn btn-success"><i class="fa fa-user-plus" aria-hidden="true">
+                                        Add to Select Applicant</i></a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8" class="text-center bg-warning">No Apply Tender Tender</td>
+                            </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>

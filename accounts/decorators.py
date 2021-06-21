@@ -2,28 +2,13 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 
 
-def student_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
+def ministry_incharge_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
     '''
     Decorator for views that checks that the logged in user is a student,
     redirects to the log-in page if necessary.
     '''
     actual_decorator = user_passes_test(
-        lambda u: u.is_active and u.is_student,
-        login_url=login_url,
-        redirect_field_name=redirect_field_name
-    )
-    if function:
-        return actual_decorator(function)
-    return actual_decorator
-
-
-def governmentEmployee_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
-    '''
-    Decorator for views that checks that the logged in user is a teacher,
-    redirects to the log-in page if necessary.
-    '''
-    actual_decorator = user_passes_test(
-        lambda u: u.is_active and u.is_governmentEmployee,
+        lambda u: u.is_active and u.is_government_employee,
         login_url=login_url,
         redirect_field_name=redirect_field_name
     )
@@ -47,13 +32,13 @@ def superAdmin_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, 
     return actual_decorator
 
 
-def teacher_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
+def holder_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
     '''
     Decorator for views that checks that the logged in user is a teacher,
     redirects to the log-in page if necessary.
     '''
     actual_decorator = user_passes_test(
-        lambda u: u.is_active and u.is_trainer,
+        lambda u: u.is_active and u.is_tender_holder,
         login_url=login_url,
         redirect_field_name=redirect_field_name
     )

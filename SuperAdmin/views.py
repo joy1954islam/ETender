@@ -43,6 +43,15 @@ def SuperAdminHome(request):
     return render(request, 'SuperAdmin/Home.html', context)
 
 
+def notification(request):
+    holder_user = User.objects.exclude(is_government_employee=True).exclude(is_superuser=True).exclude(
+        is_tender_holder=True)
+    context = {
+        'holder_user': holder_user
+    }
+    return render(request, 'SuperAdmin/notification.html', context)
+
+
 def SuperAdminProfile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST or None, request.FILES or None, instance=request.user)

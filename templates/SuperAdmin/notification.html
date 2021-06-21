@@ -1,0 +1,23 @@
+{% extends 'SuperAdmin/SuperAdminNavbar.html' %}
+
+{% load static %}
+{% block content %}
+
+<div class="container" xmlns="http://www.w3.org/1999/html">
+
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-6">Holder Registration Notification</h1>
+            <p class="lead">
+                {% for holder_user in holder_user %}
+                <div class="alert alert-primary" role="alert">
+                     <strong> {{ holder_user.username }} </strong> is a new user. please approve
+                </div>
+                {% endfor %}
+            </p>
+          </div>
+        </div>
+
+    </div>
+
+{% endblock content %}
